@@ -7,7 +7,7 @@
 // RPC functions are exposed to anon), so it is used as a default here — same idea
 // as the cloudName default in Hackflow. Env vars, if set, override these.
 // NEVER put a secret / service_role key here.
-const DEFAULT_SUPABASE_URL = 'PASTE_SUPABASE_PROJECT_URL_HERE'; // e.g. https://abcdxyz.supabase.co
+const DEFAULT_SUPABASE_URL = 'https://wbwnhcbzuswdgkmukshl.supabase.co'; // e.g. https://abcdxyz.supabase.co
 const DEFAULT_PUBLISHABLE_KEY = 'sb_publishable_y2XbvE4mG8HepUqTpWpybg_FKJIsHMM';
 
 module.exports = async function handler(req, res) {
