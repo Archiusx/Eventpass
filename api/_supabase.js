@@ -4,7 +4,7 @@
 // >>> Paste your Supabase Project URL below — this is the ONLY place. <<<
 // The publishable key is meant to be public (tables are locked by RLS, and only
 // the RPC functions are exposed to anon). NEVER put a secret / service_role key here.
-const DEFAULT_SUPABASE_URL = 'PASTE_SUPABASE_PROJECT_URL_HERE'; // e.g. https://abcdxyz.supabase.co
+const DEFAULT_SUPABASE_URL = 'https://wbwnhcbzuswdgkmukshl.supabase.co'; // e.g. https://abcdxyz.supabase.co
 const DEFAULT_PUBLISHABLE_KEY = 'sb_publishable_y2XbvE4mG8HepUqTpWpybg_FKJIsHMM';
 
 function getConfig() {
