@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#07041a" />
+<title>LAN ARENA 2026 · Bajaj Institute of Technology, Wardha</title>
+<meta name="description" content="Register for LAN ARENA 2026 at Bajaj Institute of Technology, Wardha and get your QR entry pass." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%AE%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js" defer></script>
+<style>
+:root{
+  --void:#07041a; --ink:#0d0826; --panel:#130c2e; --panel-2:#1b1242;
+  --line:rgba(170,150,255,.16); --line-strong:rgba(170,150,255,.32);
+  --cyan:#27e8ff; --magenta:#ff3d9a; --violet:#8b5cf6;
+  --lime:#4dffa0; --amber:#ffb84d; --red:#ff4d6d;
+  --text:#f3f0ff; --muted:#aaa2d3; --dim:#7c74a9;
+  --ease:cubic-bezier(.2,.8,.2,1);
+  --cut:14px;
+  --hud: polygon(0 var(--cut), var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:'Poppins',system-ui,-apple-system,'Segoe UI',sans-serif;
+  background:var(--void);color:var(--text);line-height:1.6;
+  min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+main{flex:1;position:relative;z-index:1}
+h1,h2,h3{line-height:1.12;letter-spacing:-.02em;font-weight:700}
+p{color:var(--muted)}
+a{color:inherit}
+button,input,select{font-family:inherit}
+[hidden]{display:none!important}
+.container{width:100%;max-width:1160px;margin:0 auto;padding:0 22px}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:6px}
+
+/* ---------- icons ---------- */
+.ic{width:1.25em;height:1.25em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* ---------- ambient background ---------- */
+.bg-fx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg-fx .blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5}
+.bg-fx .b1{width:560px;height:560px;left:-160px;top:-140px;background:#5b2fd6}
+.bg-fx .b2{width:520px;height:520px;right:-180px;top:22%;background:#c21f78;opacity:.32}
+.bg-fx .b3{width:520px;height:520px;left:30%;bottom:-260px;background:#0a8fb5;opacity:.3}
+.bg-fx .grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(170,150,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(170,150,255,.07) 1px,transparent 1px);
+  background-size:52px 52px;
+  -webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 30%,#000 30%,transparent 100%);
+          mask-image:radial-gradient(ellipse 80% 70% at 50% 30%,#000 30%,transparent 100%);
+}
+.bg-fx .scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0 1px,transparent 1px 3px);mix-blend-mode:overlay}
+
+/* ---------- buttons ---------- */
+.btn{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:14px 26px;font-weight:600;font-size:.95rem;line-height:1;color:#fff;text-decoration:none;
+  border:0;border-radius:12px;cursor:pointer;overflow:hidden;isolation:isolate;white-space:nowrap;
+  transition:transform .28s var(--ease),box-shadow .28s var(--ease),background-position .5s var(--ease),border-color .2s,color .2s,background-color .2s;
+}
+.btn::before{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.38) 50%,transparent 70%);
+  transform:translateX(-130%);transition:transform .7s var(--ease);
+}
+.btn:hover::before{transform:translateX(130%)}
+.btn .ic{transition:transform .28s var(--ease)}
+.btn:hover .nudge{transform:translateX(5px)}
+.btn:active{transform:translateY(0) scale(.97)!important}
+.btn[disabled]{opacity:.65;cursor:progress;pointer-events:none}
+.btn-primary{
+  background:linear-gradient(120deg,var(--magenta),var(--violet) 52%,var(--cyan));background-size:220% 100%;
+  box-shadow:0 10px 34px -10px rgba(255,61,154,.7),inset 0 0 0 1px rgba(255,255,255,.22);
+}
+.btn-primary:hover{transform:translateY(-3px);background-position:100% 0;box-shadow:0 16px 46px -10px rgba(39,232,255,.65),0 0 0 1px rgba(255,255,255,.3) inset}
+.btn-secondary{background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px var(--line-strong)}
+.btn-secondary:hover{transform:translateY(-3px);color:var(--cyan);background:rgba(39,232,255,.08);box-shadow:inset 0 0 0 1px var(--cyan),0 10px 30px -12px rgba(39,232,255,.5)}
+.btn-success{background:linear-gradient(120deg,#12c77a,var(--lime));color:#03140b;box-shadow:0 10px 34px -12px rgba(77,255,160,.7)}
+.btn-success:hover{transform:translateY(-3px);box-shadow:0 16px 44px -10px rgba(77,255,160,.8)}
+.btn-danger{background:rgba(255,77,109,.1);color:var(--red);box-shadow:inset 0 0 0 1px rgba(255,77,109,.45)}
+.btn-danger:hover{transform:translateY(-3px);background:rgba(255,77,109,.18)}
+.btn-block{width:100%}
+.btn-sm{padding:10px 16px;font-size:.85rem;border-radius:10px}
+.spinner{width:18px;height:18px;border-radius:50%;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- HUD panels ---------- */
+.hud{
+  --mx:50%;--my:50%;--spot:0;
+  position:relative;padding:28px;clip-path:var(--hud);
+  background:radial-gradient(420px circle at var(--mx) var(--my),rgba(39,232,255,var(--spot)),transparent 62%),linear-gradient(160deg,var(--panel-2),var(--panel));
+  box-shadow:inset 0 0 0 1px var(--line);
+  transition:box-shadow .3s,transform .35s var(--ease);
+}
+.hud::before,.hud::after{content:"";position:absolute;width:18px;height:18px;pointer-events:none;transition:width .35s var(--ease),height .35s var(--ease),border-color .3s}
+.hud::before{left:0;top:0;border-top:2px solid var(--cyan);border-left:2px solid var(--cyan)}
+.hud::after{right:0;bottom:0;border-bottom:2px solid var(--magenta);border-right:2px solid var(--magenta)}
+.hud:hover{--spot:.14;box-shadow:inset 0 0 0 1px var(--line-strong)}
+.hud:hover::before,.hud:hover::after{width:34px;height:34px}
+.hud-lift:hover{transform:translateY(-6px)}
+
+/* ---------- header ---------- */
+.site-header{position:sticky;top:0;z-index:60;background:rgba(7,4,26,.74);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;height:70px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-weight:800;letter-spacing:-.01em;font-size:1.08rem}
+.brand small{display:block;font-weight:500;font-size:.68rem;color:var(--dim);letter-spacing:.02em;margin-top:-2px}
+.brand-mark{
+  width:42px;height:42px;display:grid;place-items:center;flex:none;color:#fff;
+  clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);
+  background:linear-gradient(140deg,var(--magenta),var(--violet) 55%,var(--cyan));
+  transition:transform .5s var(--ease),filter .3s;
+}
+.brand:hover .brand-mark{transform:rotate(60deg) scale(1.05);filter:drop-shadow(0 0 10px var(--cyan))}
+.brand:hover .brand-mark .ic{transform:rotate(-60deg)}
+.brand-mark .ic{width:22px;height:22px;transition:transform .5s var(--ease)}
+.nav-links{display:flex;align-items:center;gap:4px}
+.nav-links a{position:relative;display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:10px;font-size:.9rem;font-weight:500;color:var(--muted);text-decoration:none;transition:color .2s,background .2s}
+.nav-links a::after{content:"";position:absolute;left:14px;right:14px;bottom:3px;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--magenta),var(--cyan));transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease)}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,.04)}
+.nav-links a:hover::after,.nav-links a.is-active::after{transform:scaleX(1)}
+.nav-links a.is-active{color:var(--cyan)}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.nav-toggle{display:none;width:44px;height:44px;place-items:center;border-radius:12px;border:0;background:rgba(255,255,255,.05);color:#fff;cursor:pointer;box-shadow:inset 0 0 0 1px var(--line)}
+.nav-toggle .ic{width:22px;height:22px}
+
+/* ---------- page shell ---------- */
+.page{animation:pageIn .4s var(--ease)}
+@keyframes pageIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---------- hero ---------- */
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:center;padding:64px 0 48px}
+.hero-title{font-size:clamp(3rem,8.4vw,6.4rem);font-weight:800;line-height:.95;letter-spacing:-.045em;margin:6px 0 0}
+.glitch{position:relative;display:inline-block;background:linear-gradient(100deg,#fff 10%,#d8ccff 45%,var(--cyan) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.glitch::before,.glitch::after{content:attr(data-text);position:absolute;left:0;top:0;width:100%;overflow:hidden;background:none;color:inherit;opacity:0;pointer-events:none}
+.glitch::before{-webkit-text-fill-color:var(--magenta);left:2px}
+.glitch::after{-webkit-text-fill-color:var(--cyan);left:-2px}
+.glitch.is-glitching::before,.glitch.is-glitching::after{opacity:.9;animation:glitchSlice .5s steps(2,end) 1}
+.glitch.is-glitching::after{animation-name:glitchSlice2}
+@keyframes glitchSlice{0%{clip-path:inset(10% 0 70% 0);transform:translateX(-4px)}25%{clip-path:inset(55% 0 12% 0);transform:translateX(5px)}50%{clip-path:inset(30% 0 40% 0);transform:translateX(-3px)}75%{clip-path:inset(72% 0 5% 0);transform:translateX(4px)}100%{clip-path:inset(0 0 100% 0);transform:none}}
+@keyframes glitchSlice2{0%{clip-path:inset(60% 0 10% 0);transform:translateX(4px)}25%{clip-path:inset(8% 0 68% 0);transform:translateX(-5px)}50%{clip-path:inset(42% 0 30% 0);transform:translateX(3px)}75%{clip-path:inset(20% 0 55% 0);transform:translateX(-4px)}100%{clip-path:inset(0 0 100% 0);transform:none}}
+.hero-year{display:block;font-size:.5em;color:transparent;-webkit-text-stroke:2px var(--magenta);text-shadow:0 0 34px rgba(255,61,154,.55);letter-spacing:.02em;margin-top:.1em}
+.hero-tag{font-size:clamp(1.1rem,2.4vw,1.5rem);font-weight:600;margin-top:22px;color:#fff}
+.hero-tag span{color:var(--cyan)}
+.hero-lede{max-width:520px;margin-top:14px;font-size:1.02rem}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.chip-meta{display:inline-flex;align-items:center;gap:9px;padding:9px 14px;border-radius:999px;font-size:.85rem;font-weight:500;color:#e5defc;background:rgba(255,255,255,.05);box-shadow:inset 0 0 0 1px var(--line)}
+.chip-meta .ic{color:var(--cyan);width:1.1em;height:1.1em}
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}
+.countdown{display:flex;gap:10px;margin-top:26px}
+.cd-box{min-width:70px;padding:10px 12px;text-align:center;border-radius:12px;background:rgba(255,255,255,.05);box-shadow:inset 0 0 0 1px var(--line)}
+.cd-box b{display:block;font-size:1.5rem;font-weight:700;color:#fff;font-variant-numeric:tabular-nums}
+.cd-box span{font-size:.7rem;color:var(--dim)}
+
+.hero-art{position:relative;aspect-ratio:1/1;width:100%;max-width:520px;margin:0 auto;display:grid;place-items:center}
+.hero-art .pad{width:92%;height:auto;overflow:visible;filter:drop-shadow(0 0 22px rgba(139,92,246,.6)) drop-shadow(0 0 60px rgba(255,61,154,.28));animation:padFloat 6s ease-in-out infinite}
+.pad .draw{stroke-dasharray:140;stroke-dashoffset:140;animation:drawIn 2.2s .2s var(--ease) forwards}
+@keyframes drawIn{to{stroke-dashoffset:0}}
+@keyframes padFloat{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-12px) rotate(2deg)}}
+.pad .btn-a{animation:blink 2.4s ease-in-out infinite}
+.pad .btn-b{animation:blink 2.4s .6s ease-in-out infinite}
+.pad .btn-x{animation:blink 2.4s 1.2s ease-in-out infinite}
+.pad .btn-y{animation:blink 2.4s 1.8s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:.35}50%{opacity:1}}
+.ring{position:absolute;border-radius:50%;border:1px dashed var(--line-strong);pointer-events:none}
+.ring.r1{inset:2%;animation:spin 46s linear infinite}
+.ring.r2{inset:14%;border-style:solid;border-color:rgba(39,232,255,.14);animation:spin 70s linear infinite reverse}
+.orb{position:absolute;width:56px;height:56px;display:grid;place-items:center;border-radius:16px;color:var(--cyan);background:rgba(19,12,46,.85);box-shadow:inset 0 0 0 1px var(--line-strong),0 10px 30px -8px rgba(0,0,0,.6);backdrop-filter:blur(6px);animation:orbFloat 5s ease-in-out infinite}
+.orb .ic{width:26px;height:26px}
+.orb.o1{left:2%;top:18%;color:var(--cyan)}
+.orb.o2{right:4%;top:10%;color:var(--magenta);animation-delay:-1.2s}
+.orb.o3{right:-1%;top:52%;color:var(--amber);animation-delay:-2.4s}
+.orb.o4{left:6%;bottom:14%;color:var(--lime);animation-delay:-3.1s}
+.orb.o5{right:16%;bottom:4%;color:var(--violet);animation-delay:-.6s}
+.orb.o6{left:-2%;top:52%;color:var(--red);animation-delay:-4s}
+@keyframes orbFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+
+/* ---------- marquee ---------- */
+.marquee{overflow:hidden;border-block:1px solid var(--line);background:rgba(19,12,46,.55);margin:8px 0 0}
+.marquee-track{display:flex;width:max-content;animation:scrollX 32s linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+.marquee-item{display:flex;align-items:center;gap:14px;padding:18px 28px;font-weight:700;font-size:1.05rem;color:var(--muted);white-space:nowrap;transition:color .25s}
+.marquee-item .ic{color:var(--violet);width:1.4em;height:1.4em;transition:color .25s,transform .35s var(--ease)}
+.marquee-item:hover{color:#fff}
+.marquee-item:hover .ic{color:var(--cyan);transform:scale(1.3) rotate(-8deg)}
+@keyframes scrollX{to{transform:translateX(-50%)}}
+
+/* ---------- sections ---------- */
+.section{padding:76px 0 8px}
+.section-head{margin-bottom:34px;max-width:620px}
+.section-head h2{font-size:clamp(1.8rem,4vw,2.6rem)}
+.section-head p{margin-top:10px}
+.zone-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.zone .tile{
+  width:58px;height:58px;display:grid;place-items:center;margin-bottom:18px;color:#fff;
+  clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);
+  background:linear-gradient(140deg,var(--violet),var(--magenta));
+  transition:transform .5s var(--ease),filter .3s,background .3s;
+}
+.zone:nth-child(2) .tile{background:linear-gradient(140deg,var(--cyan),var(--violet))}
+.zone:nth-child(3) .tile{background:linear-gradient(140deg,var(--amber),var(--magenta))}
+.zone:nth-child(4) .tile{background:linear-gradient(140deg,var(--lime),var(--cyan))}
+.zone .tile .ic{width:28px;height:28px}
+.zone:hover .tile{transform:rotate(60deg) scale(1.1);filter:drop-shadow(0 0 14px var(--cyan))}
+.zone:hover .tile .ic{transform:rotate(-60deg)}
+.zone .tile .ic{transition:transform .5s var(--ease)}
+.zone h3{font-size:1.15rem;margin-bottom:8px}
+.zone p{font-size:.92rem}
+.zone .bar{display:block;height:3px;margin-top:20px;border-radius:3px;background:rgba(255,255,255,.08);overflow:hidden}
+.zone .bar i{display:block;height:100%;width:18%;background:linear-gradient(90deg,var(--magenta),var(--cyan));transition:width .6s var(--ease)}
+.zone:hover .bar i{width:100%}
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;counter-reset:step}
+.step .num{display:block;font-size:3.4rem;font-weight:800;line-height:1;color:transparent;-webkit-text-stroke:1.5px var(--violet);margin-bottom:14px;transition:-webkit-text-stroke-color .3s,text-shadow .3s}
+.step:hover .num{-webkit-text-stroke-color:var(--cyan);text-shadow:0 0 26px rgba(39,232,255,.55)}
+.step h3{font-size:1.1rem;margin-bottom:6px}
+.step p{font-size:.92rem}
+
+.cta-band{margin:76px 0 0;text-align:center;padding:52px 28px}
+.cta-band h2{font-size:clamp(1.6rem,4vw,2.4rem);max-width:640px;margin:0 auto 12px}
+.cta-band p{margin-bottom:26px}
+
+/* ---------- forms ---------- */
+.register-page{padding:44px 22px 20px;max-width:600px}
+.register-head{display:flex;align-items:center;gap:16px;margin-bottom:26px}
+.register-head h2{font-size:1.7rem}
+.register-head p{font-size:.9rem;margin-top:2px}
+.field{margin-bottom:20px}
+.field label{display:block;margin-bottom:8px;font-size:.85rem;font-weight:600;color:#e6e0ff}
+.field .required{color:var(--magenta)}
+.input-wrap{position:relative}
+.input-wrap>.ic{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--dim);pointer-events:none;transition:color .25s,transform .3s var(--ease)}
+.input-wrap input,.input-wrap select{
+  width:100%;height:52px;padding:0 16px 0 46px;font-size:.95rem;color:#fff;
+  background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:12px;outline:none;
+  transition:border-color .25s,box-shadow .25s,background .25s;
+}
+.input-wrap input::placeholder{color:var(--dim)}
+.input-wrap select{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:44px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23aaa2d3' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center}
+.input-wrap select:invalid{color:var(--dim)}
+.input-wrap select option{background:#130c2e;color:#fff}
+.input-wrap:hover input,.input-wrap:hover select{border-color:var(--line-strong)}
+.input-wrap input:focus,.input-wrap select:focus{border-color:var(--cyan);background:rgba(39,232,255,.05);box-shadow:0 0 0 4px rgba(39,232,255,.13),0 0 28px -4px rgba(39,232,255,.35)}
+.input-wrap:focus-within>.ic{color:var(--cyan);transform:translateY(-50%) scale(1.15)}
+.input-wrap input:-webkit-autofill{-webkit-text-fill-color:#fff;box-shadow:0 0 0 100px #1b1242 inset}
+.field-error{display:none;margin-top:7px;font-size:.8rem;color:var(--red)}
+.field.has-error .field-error{display:block}
+.field.has-error .input-wrap input,.field.has-error .input-wrap select{border-color:var(--red);box-shadow:0 0 0 4px rgba(255,77,109,.12);animation:shake .4s}
+@keyframes shake{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+.chip{margin-top:9px;display:inline-flex;align-items:center;gap:8px;padding:7px 12px;font-size:.78rem;font-weight:500;color:var(--cyan);background:rgba(39,232,255,.07);border:1px dashed rgba(39,232,255,.4);border-radius:999px;cursor:pointer;transition:background .2s,transform .25s var(--ease),border-style .2s}
+.chip:hover{background:rgba(39,232,255,.15);transform:translateY(-2px);border-style:solid}
+.chip .ic{width:1em;height:1em}
+.checkbox-row{display:flex;align-items:flex-start;gap:12px;cursor:pointer;font-size:.88rem;color:var(--muted)}
+.checkbox-row input{appearance:none;-webkit-appearance:none;flex:none;width:22px;height:22px;margin-top:1px;border-radius:7px;border:1.5px solid var(--line-strong);background:rgba(255,255,255,.04);cursor:pointer;display:grid;place-items:center;transition:background .2s,border-color .2s,box-shadow .2s}
+.checkbox-row input:hover{border-color:var(--cyan)}
+.checkbox-row input:checked{background:linear-gradient(140deg,var(--magenta),var(--violet));border-color:transparent;box-shadow:0 0 16px -2px rgba(255,61,154,.7)}
+.checkbox-row input:checked::after{content:"";width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.link-accent{color:var(--cyan);text-decoration:none;border-bottom:1px solid rgba(39,232,255,.4)}
+.link-accent:hover{border-bottom-color:var(--cyan)}
+
+/* ---------- ticket / pass ---------- */
+.ticket-page{padding:40px 22px 24px;max-width:520px}
+.ticket-hero{text-align:center;margin-bottom:26px}
+.success-icon{position:relative;width:74px;height:74px;margin:0 auto 18px;display:grid;place-items:center;border-radius:50%;background:linear-gradient(140deg,#12c77a,var(--lime));color:#03140b}
+.success-icon::before,.success-icon::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--lime);animation:pulseRing 2.2s var(--ease) infinite}
+.success-icon::after{animation-delay:1.1s}
+.success-icon .ic{width:34px;height:34px;stroke-width:3}
+@keyframes pulseRing{from{transform:scale(1);opacity:.7}to{transform:scale(1.9);opacity:0}}
+.ticket-hero h2{font-size:1.9rem}
+.ticket-hero p{margin-top:8px;font-size:.95rem}
+
+.pass-stage{perspective:1100px}
+.pass{
+  --rx:0deg;--ry:0deg;--gx:50%;--gy:0%;
+  position:relative;border-radius:22px;padding:2px;
+  background:conic-gradient(from 210deg,var(--cyan),var(--violet),var(--magenta),var(--amber),var(--cyan));
+  transform:rotateX(var(--rx)) rotateY(var(--ry));transform-style:preserve-3d;
+  transition:transform .25s var(--ease),box-shadow .3s;
+  box-shadow:0 30px 70px -24px rgba(139,92,246,.7),0 0 60px -20px rgba(39,232,255,.4);
+}
+.pass-inner{position:relative;overflow:hidden;border-radius:20px;background:linear-gradient(170deg,#1b1242,#0d0826 70%)}
+.pass-inner::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(360px circle at var(--gx) var(--gy),rgba(255,255,255,.14),transparent 60%),linear-gradient(115deg,transparent 30%,rgba(39,232,255,.07) 45%,rgba(255,61,154,.09) 55%,transparent 70%);mix-blend-mode:screen}
+.pass-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:22px 24px 18px}
+.pass-top .brand-mark{width:38px;height:38px}
+.pass-top .pass-ev{font-weight:800;font-size:1.15rem;letter-spacing:-.02em;line-height:1.15}
+.pass-top .pass-ev small{display:block;font-size:.7rem;font-weight:500;color:var(--cyan);letter-spacing:.06em;margin-top:2px}
+.pass-status{display:inline-flex;align-items:center;gap:7px;padding:6px 11px;border-radius:999px;font-size:.72rem;font-weight:600;color:var(--lime);background:rgba(77,255,160,.1);box-shadow:inset 0 0 0 1px rgba(77,255,160,.35)}
+.pass-status i{width:7px;height:7px;border-radius:50%;background:var(--lime);animation:blink 1.6s infinite}
+.pass-body{padding:6px 24px 22px}
+.pass-name{font-size:1.65rem;font-weight:800;letter-spacing:-.025em;line-height:1.15;margin-bottom:16px;word-break:break-word}
+.pass-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 16px}
+.pass-grid .full{grid-column:1/-1}
+.pass-cell dt{display:flex;align-items:center;gap:6px;font-size:.72rem;color:var(--dim);font-weight:500}
+.pass-cell dt .ic{width:1em;height:1em;color:var(--violet)}
+.pass-cell dd{font-size:.9rem;font-weight:600;color:#fff;line-height:1.35;margin-top:2px;word-break:break-word}
+.pass-tear{position:relative;height:26px;margin:0 -1px}
+.pass-tear::before{content:"";position:absolute;left:22px;right:22px;top:50%;border-top:2px dashed rgba(170,150,255,.3)}
+.pass-tear i{position:absolute;top:0;width:26px;height:26px;border-radius:50%;background:var(--void)}
+.pass-tear i:first-child{left:-13px}
+.pass-tear i:last-child{right:-13px}
+.pass-foot{display:flex;align-items:center;gap:18px;padding:18px 24px 24px}
+.qr-frame{position:relative;flex:none;padding:12px;border-radius:16px;background:#fff;box-shadow:0 0 0 3px rgba(39,232,255,.5),0 0 34px -4px rgba(39,232,255,.6)}
+.qr-frame::before{content:"";position:absolute;left:12px;right:12px;height:3px;border-radius:3px;background:linear-gradient(90deg,transparent,var(--magenta),transparent);animation:qrScan 2.6s ease-in-out infinite;box-shadow:0 0 12px var(--magenta)}
+@keyframes qrScan{0%,100%{top:12px}50%{top:calc(100% - 15px)}}
+.qr-render{width:132px;height:132px;display:grid;place-items:center}
+.qr-render img,.qr-render canvas{width:132px!important;height:132px!important;display:block}
+.pass-id{min-width:0;flex:1}
+.pass-id span{font-size:.72rem;color:var(--dim);font-weight:500}
+.pass-id strong{display:block;margin:2px 0 10px;font-size:1.22rem;font-weight:800;letter-spacing:.01em;color:var(--cyan);text-shadow:0 0 20px rgba(39,232,255,.5);word-break:break-all}
+.icon-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 12px;font-size:.78rem;font-weight:600;color:#fff;background:rgba(255,255,255,.06);border:0;border-radius:10px;cursor:pointer;box-shadow:inset 0 0 0 1px var(--line);transition:background .2s,transform .25s var(--ease),color .2s}
+.icon-btn:hover{background:rgba(39,232,255,.14);transform:translateY(-2px);color:var(--cyan)}
+.icon-btn.is-copied{color:var(--lime);background:rgba(77,255,160,.12)}
+.ticket-actions{display:grid;gap:12px;margin-top:26px}
+.info-box{display:flex;gap:12px;margin-top:22px;padding:14px 16px;border-radius:14px;background:rgba(255,184,77,.07);box-shadow:inset 0 0 0 1px rgba(255,184,77,.25)}
+.info-box .ic{color:var(--amber);margin-top:2px}
+.info-box strong{font-size:.9rem;color:#fff}
+.info-box p{font-size:.82rem;margin-top:1px}
+.back-home-link{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:22px;color:var(--muted);font-size:.9rem;text-decoration:none;transition:color .2s}
+.back-home-link:hover{color:var(--cyan)}
+.empty-card{text-align:center;padding:44px 26px}
+.empty-card .tile{width:66px;height:66px;margin:0 auto 18px;display:grid;place-items:center;color:var(--violet);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);background:rgba(139,92,246,.16)}
+.empty-card .tile .ic{width:30px;height:30px}
+.empty-card h2{font-size:1.5rem;margin-bottom:8px}
+.empty-card p{margin-bottom:22px}
+
+/* ---------- admin console ---------- */
+.admin{padding:40px 22px 24px;max-width:1040px}
+.login-card{max-width:440px;margin:34px auto 0;text-align:center}
+.login-card .tile{width:70px;height:70px;margin:0 auto 18px;display:grid;place-items:center;color:#fff;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);background:linear-gradient(140deg,var(--violet),var(--magenta))}
+.login-card .tile .ic{width:32px;height:32px}
+.login-card h2{font-size:1.6rem}
+.login-card>p{margin:8px 0 24px;font-size:.92rem}
+.login-card form{text-align:left}
+.login-err{display:none;margin:-4px 0 14px;padding:10px 12px;border-radius:10px;font-size:.85rem;color:var(--red);background:rgba(255,77,109,.09);box-shadow:inset 0 0 0 1px rgba(255,77,109,.3)}
+.login-err.show{display:block;animation:shake .4s}
+.console-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px;flex-wrap:wrap}
+.console-head h2{font-size:1.7rem;display:flex;align-items:center;gap:12px}
+.live{display:inline-flex;align-items:center;gap:7px;font-size:.75rem;font-weight:600;color:var(--lime);padding:5px 11px;border-radius:999px;background:rgba(77,255,160,.1);box-shadow:inset 0 0 0 1px rgba(77,255,160,.3)}
+.live i{width:7px;height:7px;border-radius:50%;background:var(--lime);animation:blink 1.4s infinite}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.stat{padding:20px 22px}
+.stat dt{display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--muted);font-weight:500}
+.stat dt .ic{color:var(--cyan)}
+.stat dd{font-size:2.4rem;font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-top:6px;font-variant-numeric:tabular-nums}
+.stat.in dd{color:var(--lime)}
+.progress{height:8px;margin:16px 0 26px;border-radius:8px;background:rgba(255,255,255,.07);overflow:hidden}
+.progress i{display:block;height:100%;width:0;border-radius:8px;background:linear-gradient(90deg,var(--cyan),var(--lime));box-shadow:0 0 16px rgba(77,255,160,.6);transition:width .8s var(--ease)}
+.console-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.viewport{position:relative;aspect-ratio:1/1;border-radius:16px;overflow:hidden;background:#04020f;box-shadow:inset 0 0 0 1px var(--line)}
+.viewport video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.viewport-msg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:20px;text-align:center;font-size:.9rem;color:var(--muted)}
+.viewport-msg .ic{width:38px;height:38px;color:var(--violet)}
+.reticle{position:absolute;inset:14%;pointer-events:none;opacity:0;transition:opacity .3s}
+.viewport.live-cam .reticle{opacity:1}
+.viewport.live-cam .viewport-msg{display:none}
+.reticle i{position:absolute;width:34px;height:34px;border:3px solid var(--cyan);filter:drop-shadow(0 0 6px var(--cyan))}
+.reticle i:nth-child(1){left:0;top:0;border-right:0;border-bottom:0;border-top-left-radius:10px}
+.reticle i:nth-child(2){right:0;top:0;border-left:0;border-bottom:0;border-top-right-radius:10px}
+.reticle i:nth-child(3){left:0;bottom:0;border-right:0;border-top:0;border-bottom-left-radius:10px}
+.reticle i:nth-child(4){right:0;bottom:0;border-left:0;border-top:0;border-bottom-right-radius:10px}
+.reticle .laser{position:absolute;left:6%;right:6%;height:2px;background:linear-gradient(90deg,transparent,var(--magenta),transparent);box-shadow:0 0 14px var(--magenta);animation:laser 2.2s ease-in-out infinite}
+@keyframes laser{0%,100%{top:6%}50%{top:94%}}
+.scan-actions{display:grid;gap:12px;margin-top:16px}
+.manual{display:flex;gap:10px;margin-top:14px}
+.manual .input-wrap{flex:1}
+.manual input{text-transform:uppercase}
+.manual .btn{flex:none}
+.result{min-height:340px;display:flex;flex-direction:column;justify-content:center}
+.res-idle{text-align:center}
+.res-idle .tile{width:62px;height:62px;margin:0 auto 14px;display:grid;place-items:center;color:var(--violet);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);background:rgba(139,92,246,.16)}
+.res-idle .tile .ic{width:28px;height:28px}
+.res-idle h3{font-size:1.15rem}
+.res-idle p{font-size:.9rem;margin-top:4px}
+.res-head{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.res-badge{width:54px;height:54px;flex:none;display:grid;place-items:center;border-radius:16px}
+.res-badge .ic{width:28px;height:28px;stroke-width:2.6}
+.res-title{font-size:1.25rem;font-weight:800;letter-spacing:-.02em;line-height:1.2}
+.res-sub{font-size:.85rem;color:var(--muted);margin-top:2px}
+.res.ok .res-badge{background:rgba(77,255,160,.14);color:var(--lime);box-shadow:inset 0 0 0 1px rgba(77,255,160,.4)}
+.res.ok .res-title{color:var(--lime)}
+.res.warn .res-badge{background:rgba(255,184,77,.14);color:var(--amber);box-shadow:inset 0 0 0 1px rgba(255,184,77,.4)}
+.res.warn .res-title{color:var(--amber)}
+.res.bad .res-badge{background:rgba(255,77,109,.14);color:var(--red);box-shadow:inset 0 0 0 1px rgba(255,77,109,.4)}
+.res.bad .res-title{color:var(--red)}
+.res{animation:pop .35s var(--ease)}
+@keyframes pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+.res-name{font-size:1.5rem;font-weight:800;letter-spacing:-.025em;line-height:1.2;word-break:break-word}
+.res-meta{margin:6px 0 18px;font-size:.9rem;color:var(--muted)}
+.res-id{display:inline-block;margin-bottom:18px;padding:6px 12px;border-radius:8px;font-weight:700;font-size:.9rem;color:var(--cyan);background:rgba(39,232,255,.08);box-shadow:inset 0 0 0 1px rgba(39,232,255,.3)}
+.res-actions{display:grid;gap:10px}
+.recent{margin-top:20px}
+.recent h3{display:flex;align-items:center;gap:10px;font-size:1.05rem;margin-bottom:14px}
+.recent h3 .ic{color:var(--cyan)}
+.recent ul{list-style:none;display:grid;gap:8px}
+.recent li{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 14px;border-radius:12px;background:rgba(255,255,255,.035);transition:background .2s,transform .25s var(--ease)}
+.recent li:hover{background:rgba(39,232,255,.07);transform:translateX(4px)}
+.recent li b{display:block;font-size:.9rem;font-weight:600}
+.recent li small{color:var(--dim);font-size:.75rem}
+.recent li time{font-size:.8rem;color:var(--lime);font-weight:600;white-space:nowrap}
+.recent .none{text-align:center;color:var(--dim);font-size:.9rem;padding:8px}
+
+/* ---------- footer ---------- */
+.site-footer{position:relative;z-index:1;margin-top:90px;border-top:1px solid var(--line);background:rgba(7,4,26,.7);padding:34px 0 calc(34px + env(safe-area-inset-bottom,0))}
+.footer-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px}
+.footer-brand{display:flex;align-items:center;gap:12px}
+.footer-brand b{display:block;font-size:.98rem}
+.footer-brand span{font-size:.8rem;color:var(--dim)}
+.dev{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:12px;font-size:.88rem;font-weight:500;color:var(--muted);background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px var(--line);transition:color .25s,box-shadow .25s,transform .3s var(--ease)}
+.dev .ic{color:var(--magenta);transition:transform .35s var(--ease)}
+.dev b{color:#fff;font-weight:700}
+.dev:hover{transform:translateY(-3px);box-shadow:inset 0 0 0 1px var(--magenta),0 12px 30px -12px rgba(255,61,154,.6);color:#fff}
+.dev:hover .ic{transform:scale(1.25) rotate(-10deg)}
+
+/* ---------- responsive ---------- */
+@media (max-width:920px){
+  .hero{grid-template-columns:1fr;padding-top:40px;gap:8px}
+  .hero-art{max-width:400px;order:-1;margin-bottom:-10px}
+  .console-grid{grid-template-columns:1fr}
+}
+@media (max-width:760px){
+  .nav-toggle{display:grid}
+  .nav-actions .btn{display:none}
+  .nav-links{position:absolute;left:0;right:0;top:100%;flex-direction:column;align-items:stretch;padding:12px 22px 18px;background:rgba(7,4,26,.97);border-bottom:1px solid var(--line);display:none}
+  .nav-links.nav-links-open{display:flex;animation:pageIn .25s var(--ease)}
+  .nav-links a{padding:14px}
+  .steps{grid-template-columns:1fr}
+  .stats-grid{gap:10px}
+  .stat{padding:16px 14px}
+  .stat dd{font-size:1.8rem}
+  .stat dt{font-size:.72rem}
+}
+@media (max-width:440px){
+  .hud{padding:22px 18px}
+  .pass-foot{flex-direction:column;align-items:stretch;text-align:center}
+  .qr-frame{align-self:center}
+  .pass-grid{grid-template-columns:1fr}
+  .manual{flex-direction:column}
+  .brand small{display:none}
+  .orb{width:46px;height:46px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+  .pad .draw{stroke-dashoffset:0}
+}
+
+.peek{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:36px;height:36px;display:grid;place-items:center;border:0;border-radius:9px;background:transparent;color:var(--dim);cursor:pointer;transition:color .2s,background .2s}
+.peek:hover{color:var(--cyan);background:rgba(39,232,255,.1)}
+.peek[aria-pressed="true"]{color:var(--cyan)}
+.peek .ic{position:static;transform:none;pointer-events:none}
+.input-wrap input[type="password"]{padding-right:52px}
+</style>
+</head>
+<body>
+
+<!-- ============ SVG icon sprite (gaming + UI) ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-controller" viewBox="0 0 24 24"><line x1="6" x2="10" y1="11" y2="11"/><line x1="8" x2="8" y1="9" y2="13"/><line x1="15" x2="15.01" y1="12" y2="12"/><line x1="18" x2="18.01" y1="10" y2="10"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/></symbol>
+    <symbol id="i-joystick" viewBox="0 0 24 24"><path d="M21 17a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1z"/><path d="M6 15v-2"/><path d="M12 15V9"/><circle cx="12" cy="6" r="3"/></symbol>
+    <symbol id="i-headset" viewBox="0 0 24 24"><path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z"/><path d="M21 16v2a4 4 0 0 1-4 4h-5"/></symbol>
+    <symbol id="i-keyboard" viewBox="0 0 24 24"><path d="M10 8h.01M12 12h.01M14 8h.01M16 12h.01M18 8h.01M6 8h.01M7 16h10M8 12h.01"/><rect width="20" height="16" x="2" y="4" rx="2"/></symbol>
+    <symbol id="i-mouse" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="7"/><path d="M12 6v4"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></symbol>
+    <symbol id="i-swords" viewBox="0 0 24 24"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" x2="19" y1="19" y2="13"/><line x1="16" x2="20" y1="16" y2="20"/><line x1="19" x2="21" y1="21" y2="19"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/><line x1="5" x2="9" y1="14" y2="18"/><line x1="7" x2="4" y1="17" y2="20"/><line x1="3" x2="5" y1="19" y2="21"/></symbol>
+    <symbol id="i-crosshair" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="22" x2="18" y1="12" y2="12"/><line x1="6" x2="2" y1="12" y2="12"/><line x1="12" x2="12" y1="6" y2="2"/><line x1="12" x2="12" y1="22" y2="18"/></symbol>
+    <symbol id="i-ghost" viewBox="0 0 24 24"><path d="M9 10h.01M15 10h.01"/><path d="M12 2a8 8 0 0 0-8 8v12l3-3 2.5 2.5L12 19l2.5 2.5L17 19l3 3V10a8 8 0 0 0-8-8z"/></symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M3 9a3 3 0 1 0 0 6v2a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-2a3 3 0 1 1 0-6V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v2Z"/><path d="M13 5v2M13 11v2M13 17v2"/></symbol>
+    <symbol id="i-qr" viewBox="0 0 24 24"><rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3M21 21v.01M12 7v3a2 2 0 0 1-2 2H7M3 12h.01M12 3h.01M12 16v.01M16 12h1M21 12v.01M12 21v-1"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></symbol>
+    <symbol id="i-scan" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 12h10"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><path d="M20 21a8 8 0 1 0-16 0"/><circle cx="12" cy="7" r="4"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .7 2.9a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.4 1.9.6 2.9.7a2 2 0 0 1 1.7 2Z"/></symbol>
+    <symbol id="i-school" viewBox="0 0 24 24"><path d="M3 21h18M4 21V9l8-5 8 5v12M9 21v-6h6v6"/></symbol>
+    <symbol id="i-cap" viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.1 2.7 2 6 2s6-.9 6-2v-5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-3.9M8.6 13.5l6.8 3.9"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 12 9-9 9 9"/><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+    <symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4M12 17h.01"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></symbol>
+    <symbol id="i-undo" viewBox="0 0 24 24"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M12 20h.01M2 8.82a15 15 0 0 1 20 0M5 12.86a10 10 0 0 1 14 0M8.5 16.43a5 5 0 0 1 7 0"/></symbol>
+    <symbol id="i-monitor" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="3" rx="2"/><path d="M8 21h8M12 17v4"/></symbol>
+  </defs>
+</svg>
+
+<!-- ============ ambient background ============ -->
+<div class="bg-fx" aria-hidden="true">
+  <i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i>
+  <i class="grid"></i><i class="scan"></i>
+</div>
+
+<div id="app-header"></div>
+
+<main>
+
+  <!-- ==================== HOME ==================== -->
+  <div class="page" data-page="index">
+    <div class="container">
+      <section class="hero">
+        <div class="hero-copy">
+          <h1 class="hero-title">
+            <span class="glitch" data-text="LAN ARENA">LAN ARENA</span>
+            <span class="hero-year" id="hero-year">2026</span>
+          </h1>
+          <p class="hero-tag" id="hero-tag">Plug in. Squad up. <span>Level up.</span></p>
+          <p class="hero-lede">
+            A LAN gaming event at Bajaj Institute of Technology, Wardha. Register once,
+            get your QR pass, and scan in at the gate.
+          </p>
+          <div class="hero-meta" id="hero-meta"></div>
+          <div class="countdown" id="countdown" hidden></div>
+          <div class="hero-cta">
+            <a href="#register" class="btn btn-primary">
+              <svg class="ic"><use href="#i-ticket"/></svg>
+              Get your pass
+              <svg class="ic nudge"><use href="#i-arrow"/></svg>
+            </a>
+            <a href="#zones" class="btn btn-secondary">
+              <svg class="ic"><use href="#i-crosshair"/></svg>
+              See game zones
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-art" aria-hidden="true">
+          <div class="ring r1"></div><div class="ring r2"></div>
+          <svg class="pad" viewBox="0 0 24 24">
+            <defs>
+              <linearGradient id="gpad" gradientUnits="userSpaceOnUse" x1="2" y1="4" x2="22" y2="20">
+                <stop offset="0" stop-color="#27e8ff"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#ff3d9a"/>
+              </linearGradient>
+            </defs>
+            <g fill="none" stroke="url(#gpad)" stroke-width=".38" stroke-linecap="round" stroke-linejoin="round">
+              <path class="draw" pathLength="140" d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/>
+              <path d="M6 9.8v4.4M3.8 12h4.4" stroke-width=".9"/>
+              <path d="M10.6 9.2h2.8" stroke-width=".5"/>
+            </g>
+            <circle class="btn-a" cx="17.6" cy="13.5" r=".9" fill="#27e8ff"/>
+            <circle class="btn-b" cx="19.6" cy="11.5" r=".9" fill="#ff3d9a"/>
+            <circle class="btn-x" cx="15.6" cy="11.5" r=".9" fill="#ffb84d"/>
+            <circle class="btn-y" cx="17.6" cy="9.5" r=".9" fill="#4dffa0"/>
+          </svg>
+          <span class="orb o1"><svg class="ic"><use href="#i-headset"/></svg></span>
+          <span class="orb o2"><svg class="ic"><use href="#i-trophy"/></svg></span>
+          <span class="orb o3"><svg class="ic"><use href="#i-swords"/></svg></span>
+          <span class="orb o4"><svg class="ic"><use href="#i-ghost"/></svg></span>
+          <span class="orb o5"><svg class="ic"><use href="#i-zap"/></svg></span>
+          <span class="orb o6"><svg class="ic"><use href="#i-heart"/></svg></span>
+        </div>
+      </section>
+    </div>
+
+    <div class="marquee" aria-hidden="true"><div class="marquee-track" id="marquee-track"></div></div>
+
+    <div class="container">
+      <section id="zones" class="section">
+        <div class="section-head">
+          <h2>Pick your battlefield</h2>
+          <p>Game zones at the arena. Bring your squad or find one on the day.</p>
+        </div>
+        <div class="zone-grid" id="zone-grid"></div>
+      </section>
+
+      <section id="how" class="section">
+        <div class="section-head">
+          <h2>How to get in</h2>
+          <p>Three steps from this page to the arena floor.</p>
+        </div>
+        <div class="steps">
+          <div class="hud hud-lift step"><span class="num">1</span><h3>Register</h3><p>Fill in the short form with your name, college and course.</p></div>
+          <div class="hud hud-lift step"><span class="num">2</span><h3>Save your pass</h3><p>Your QR pass shows up instantly. Download it or share it to your phone.</p></div>
+          <div class="hud hud-lift step"><span class="num">3</span><h3>Scan and play</h3><p>Show the QR at the gate. The organizers scan it and you are in.</p></div>
+        </div>
+      </section>
+
+      <section class="hud cta-band">
+        <h2>Your seat at the arena is one form away</h2>
+        <p>Free digital pass. Takes under a minute.</p>
+        <a href="#register" class="btn btn-primary">
+          <svg class="ic"><use href="#i-controller"/></svg>
+          Register now
+          <svg class="ic nudge"><use href="#i-arrow"/></svg>
+        </a>
+      </section>
+    </div>
+  </div>
+
+  <!-- ==================== REGISTER ==================== -->
+  <div class="page" data-page="register" hidden>
+    <div class="container register-page">
+      <div class="hud register-card">
+        <div class="register-head">
+          <span class="brand-mark"><svg class="ic"><use href="#i-controller"/></svg></span>
+          <div>
+            <h2 id="reg-title">LAN ARENA 2026</h2>
+            <p>Register to get your QR pass</p>
+          </div>
+        </div>
+
+        <form id="register-form" novalidate>
+          <div class="field">
+            <label for="fullName">Full name <span class="required">*</span></label>
+            <div class="input-wrap">
+              <svg class="ic"><use href="#i-user"/></svg>
+              <input type="text" id="fullName" name="fullName" placeholder="Your full name" autocomplete="name" required />
+            </div>
+            <p class="field-error">Enter your full name.</p>
+          </div>
+
+          <div class="field">
+            <label for="email">Email address <span class="required">*</span></label>
+            <div class="input-wrap">
+              <svg class="ic"><use href="#i-mail"/></svg>
+              <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required />
+            </div>
+            <p class="field-error">Enter a valid email address.</p>
+          </div>
+
+          <div class="field">
+            <label for="phone">Phone number <span class="required">*</span></label>
+            <div class="input-wrap">
+              <svg class="ic"><use href="#i-phone"/></svg>
+              <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" autocomplete="tel" pattern="[0-9+\-\s]{7,15}" required />
+            </div>
+            <p class="field-error">Enter a valid phone number (7 to 15 digits).</p>
+          </div>
+
+          <div class="field">
+            <label for="college">College / school <span class="required">*</span></label>
+            <div class="input-wrap">
+              <svg class="ic"><use href="#i-school"/></svg>
+              <input type="text" id="college" name="college" placeholder="Your college or school" autocomplete="organization" required />
+            </div>
+            <button type="button" class="chip" id="fill-bit">
+              <svg class="ic"><use href="#i-zap"/></svg>
+              I study at BIT, Wardha
+            </button>
+            <p class="field-error">Enter your college or school.</p>
+          </div>
+
+          <div class="field">
+            <label for="course">Course / class <span class="required">*</span></label>
+            <div class="input-wrap">
+              <svg class="ic"><use href="#i-cap"/></svg>
+              <select id="course" name="course" required>
+                <option value="" disabled selected>Select your course or class</option>
+                <option>B.Tech - Computer Engineering</option>
+                <option>B.Tech - Computer Science</option>
+                <option>B.Tech - Information Technology</option>
+                <option>B.Tech - Electronics &amp; Telecom</option>
+                <option>B.Tech - Electrical</option>
+                <option>B.Tech - Mechanical</option>
+                <option>B.Tech - Civil</option>
+                <option>Diploma</option>
+                <option>MBA / MCA</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <p class="field-error">Select your course or class.</p>
+          </div>
+
+          <div class="field">
+            <label class="checkbox-row" for="terms">
+              <input type="checkbox" id="terms" name="terms" required />
+              <span>I agree to the <a href="#register" class="link-accent" data-noop>Terms &amp; Conditions</a> and <a href="#register" class="link-accent" data-noop>Privacy Policy</a></span>
+            </label>
+            <p class="field-error">Agree to the terms before registering.</p>
+          </div>
+
+          <div class="login-err" id="reg-err" role="alert"></div>
+
+          <button type="submit" class="btn btn-primary btn-block">
+            <svg class="ic"><use href="#i-ticket"/></svg>
+            Register and get my pass
+            <svg class="ic nudge"><use href="#i-arrow"/></svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== TICKET / PASS ==================== -->
+  <div class="page" data-page="ticket" hidden>
+    <div class="container ticket-page">
+
+      <div class="hud empty-card" id="ticket-empty" hidden>
+        <div class="tile"><svg class="ic"><use href="#i-ticket"/></svg></div>
+        <h2>No pass on this device yet</h2>
+        <p>Register once and your QR pass will show up here.</p>
+        <a href="#register" class="btn btn-primary">
+          Register now
+          <svg class="ic nudge"><use href="#i-arrow"/></svg>
+        </a>
+      </div>
+
+      <div id="ticket-view">
+        <div class="ticket-hero">
+          <div class="success-icon" aria-hidden="true"><svg class="ic"><use href="#i-check"/></svg></div>
+          <h2 id="ticket-heading">You're in!</h2>
+          <p>Your pass is ready. Save it before you leave this page.</p>
+        </div>
+
+        <div class="pass-stage">
+          <div class="pass" id="pass">
+            <div class="pass-inner">
+              <div class="pass-top">
+                <div style="display:flex;align-items:center;gap:12px;min-width:0">
+                  <span class="brand-mark"><svg class="ic"><use href="#i-controller"/></svg></span>
+                  <div class="pass-ev"><span id="pass-event">LAN ARENA 2026</span><small>Player access pass</small></div>
+                </div>
+                <span class="pass-status"><i></i>Valid entry</span>
+              </div>
+
+              <div class="pass-body">
+                <h3 class="pass-name" id="pass-name">Player</h3>
+                <dl class="pass-grid">
+                  <div class="pass-cell full"><dt><svg class="ic"><use href="#i-school"/></svg>College</dt><dd id="pass-college">-</dd></div>
+                  <div class="pass-cell full"><dt><svg class="ic"><use href="#i-cap"/></svg>Course</dt><dd id="pass-course">-</dd></div>
+                  <div class="pass-cell"><dt><svg class="ic"><use href="#i-calendar"/></svg>Date</dt><dd id="pass-date">-</dd></div>
+                  <div class="pass-cell"><dt><svg class="ic"><use href="#i-pin"/></svg>Venue</dt><dd id="pass-venue">-</dd></div>
+                </dl>
+              </div>
+
+              <div class="pass-tear"><i></i><i></i></div>
+
+              <div class="pass-foot">
+                <div class="qr-frame"><div id="qrcode" class="qr-render"></div></div>
+                <div class="pass-id">
+                  <span>Ticket ID</span>
+                  <strong id="ticket-id-value">LAN26-000000</strong>
+                  <button type="button" class="icon-btn" id="copy-ticket-id" aria-label="Copy ticket ID">
+                    <svg class="ic"><use href="#i-copy"/></svg><em style="font-style:normal">Copy ID</em>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ticket-actions">
+          <button type="button" class="btn btn-primary btn-block" id="download-pdf-btn">
+            <svg class="ic"><use href="#i-download"/></svg>
+            Download PDF pass
+          </button>
+          <button type="button" class="btn btn-secondary btn-block" id="share-ticket-btn">
+            <svg class="ic"><use href="#i-share"/></svg>
+            Share pass
+          </button>
+          <a href="#ticket" class="btn btn-secondary btn-block" id="email-ticket-btn">
+            <svg class="ic"><use href="#i-mail"/></svg>
+            Email me the pass details
+          </a>
+        </div>
+
+        <div class="info-box">
+          <svg class="ic"><use href="#i-info"/></svg>
+          <div>
+            <strong>Keep your pass safe</strong>
+            <p>Show the QR code at the gate. Each pass works for one entry.</p>
+          </div>
+        </div>
+
+        <a href="#register" class="back-home-link" id="another-player">
+          <svg class="ic"><use href="#i-users"/></svg>
+          Register another player
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== ADMIN (verify) ==================== -->
+  <div class="page" data-page="verify" hidden>
+    <div class="container admin">
+
+      <section class="hud login-card" id="admin-login" hidden>
+        <div class="tile"><svg class="ic"><use href="#i-shield"/></svg></div>
+        <h2>Admin console</h2>
+        <p>Organizers only. Enter the admin password to scan and check in players.</p>
+        <form id="admin-login-form" novalidate>
+          <div class="field">
+            <label for="admin-pass">Admin password</label>
+            <div class="input-wrap">
+              <svg class="ic"><use href="#i-lock"/></svg>
+              <input type="password" id="admin-pass" placeholder="Enter password" autocomplete="current-password" required />
+              <button type="button" class="peek" id="admin-peek" aria-label="Show password" aria-pressed="false"><svg class="ic"><use href="#i-eye"/></svg></button>
+            </div>
+          </div>
+          <div class="login-err" id="admin-err" role="alert"></div>
+          <button type="submit" class="btn btn-primary btn-block" id="admin-login-btn">
+            <svg class="ic"><use href="#i-shield"/></svg>
+            Unlock console
+          </button>
+        </form>
+      </section>
+
+      <section id="admin-console" hidden>
+        <div class="console-head">
+          <h2>Gate control <span class="live"><i></i>Live</span></h2>
+          <button type="button" class="btn btn-secondary btn-sm" id="admin-logout">
+            <svg class="ic"><use href="#i-logout"/></svg>
+            Lock console
+          </button>
+        </div>
+
+        <dl class="stats-grid">
+          <div class="hud stat"><dt><svg class="ic"><use href="#i-users"/></svg>Registered</dt><dd id="st-total">0</dd></div>
+          <div class="hud stat in"><dt><svg class="ic"><use href="#i-check"/></svg>Checked in</dt><dd id="st-in">0</dd></div>
+          <div class="hud stat"><dt><svg class="ic"><use href="#i-clock"/></svg>Yet to arrive</dt><dd id="st-left">0</dd></div>
+        </dl>
+        <div class="progress" aria-hidden="true"><i id="st-bar"></i></div>
+
+        <div class="console-grid">
+          <div class="hud scanner">
+            <div class="viewport" id="viewport">
+              <video id="scan-video" playsinline muted></video>
+              <div class="viewport-msg" id="scan-msg">
+                <svg class="ic"><use href="#i-camera"/></svg>
+                <span id="scan-msg-text">Camera is off</span>
+              </div>
+              <div class="reticle"><i></i><i></i><i></i><i></i><span class="laser"></span></div>
+            </div>
+            <div class="scan-actions">
+              <button type="button" class="btn btn-primary btn-block" id="scan-toggle">
+                <svg class="ic"><use href="#i-scan"/></svg>
+                <span>Start camera</span>
+              </button>
+            </div>
+            <form class="manual" id="manual-form" novalidate>
+              <div class="input-wrap">
+                <svg class="ic"><use href="#i-ticket"/></svg>
+                <input type="text" id="manual-id" placeholder="LAN26-123456" autocomplete="off" autocapitalize="characters" spellcheck="false" />
+              </div>
+              <button type="submit" class="btn btn-secondary">
+                <svg class="ic"><use href="#i-search"/></svg>
+                Look up
+              </button>
+            </form>
+          </div>
+
+          <div class="hud result" id="result"></div>
+        </div>
+
+        <div class="hud recent">
+          <h3><svg class="ic"><use href="#i-clock"/></svg>Recent check-ins</h3>
+          <ul id="recent-list"></ul>
+        </div>
+      </section>
+    </div>
+  </div>
+
+</main>
+
+<div id="app-footer"></div>
+<script>
+/* =====================================================================
+   LAN ARENA 2026 — edit your event details here (single place)
+   ===================================================================== */
+const EVENT = {
+  name: "LAN ARENA 2026",
+  year: "2026",
+  tagline: ["Plug in. Squad up. ", "Level up."],
+  date: "Date & time to be announced",   // e.g. "15 March 2026 · 10:00 AM – 6:00 PM"
+  venue: "Bajaj Institute of Technology, Wardha",
+  startISO: "",                          // e.g. "2026-03-15T10:00:00+05:30" → shows a live countdown
+  college: "Bajaj Institute of Technology, Wardha",
+};
+
+const ZONES = [
+  { icon: "crosshair", title: "Battle Royale", text: "Drop in with your squad and outlast the whole lobby." },
+  { icon: "swords",    title: "Squad Deathmatch", text: "Fast rounds, tight teams and instant respawns." },
+  { icon: "joystick",  title: "Racing Circuit", text: "Grip the wheel or the pad and chase the fastest lap." },
+  { icon: "trophy",    title: "Esports Bracket", text: "Knockout matches with a live leaderboard and a champion." },
+];
+
+const MARQUEE = [
+  ["zap", "Plug in"], ["swords", "Squad up"], ["trophy", "Level up"],
+  ["headset", "Play on LAN"], ["crosshair", "Aim high"], ["ghost", "Respawn"],
+  ["keyboard", "Bring your setup"], ["heart", "Game on"],
+];
+
+/* ===================================================================== */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const ico = (name, cls = "") => `<svg class="ic ${cls}" aria-hidden="true"><use href="#i-${name}"/></svg>`;
+const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------------------------------------------------------------------
+   Shell: header, footer, home content
+   --------------------------------------------------------------------- */
+const Shell = (() => {
+  const NAV = [
+    { label: "Home", href: "#index", icon: "home" },
+    { label: "Register", href: "#register", icon: "controller" },
+    { label: "My pass", href: "#ticket", icon: "ticket" },
+    { label: "Admin", href: "#verify", icon: "shield" },
+  ];
+
+  function mountHeader(active) {
+    const el = $("#app-header");
+    if (!el) return;
+    const links = NAV.map((l) =>
+      `<a href="${l.href}" class="${l.href === "#" + active ? "is-active" : ""}">${ico(l.icon)}${l.label}</a>`
+    ).join("");
+    el.innerHTML = `
+      <header class="site-header">
+        <div class="container nav">
+          <a href="#index" class="brand" aria-label="${esc(EVENT.name)} home">
+            <span class="brand-mark">${ico("controller")}</span>
+            <span>LAN ARENA<small>Bajaj Institute of Technology, Wardha</small></span>
+          </a>
+          <nav class="nav-links" id="nav-links">${links}</nav>
+          <div class="nav-actions">
+            <a href="#register" class="btn btn-primary btn-sm">${ico("ticket")}Get your pass</a>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">${ico("menu")}</button>
+          </div>
+        </div>
+      </header>`;
+    const toggle = $("#nav-toggle"), nav = $("#nav-links");
+    toggle.addEventListener("click", () => {
+      const open = nav.classList.toggle("nav-links-open");
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.innerHTML = ico(open ? "x" : "menu");
+    });
+  }
+
+  function mountFooter() {
+    const el = $("#app-footer");
+    if (!el) return;
+    el.innerHTML = `
+      <footer class="site-footer">
+        <div class="container footer-row">
+          <div class="footer-brand">
+            <span class="brand-mark">${ico("controller")}</span>
+            <div><b>${esc(EVENT.name)}</b><span>${esc(EVENT.college)}</span></div>
+          </div>
+          <div class="dev">${ico("code")}<span>Developed by <b>Piyush Deshkar</b></span></div>
+        </div>
+      </footer>`;
+  }
+
+  function mountHome() {
+    const yr = $("#hero-year"); if (yr) yr.textContent = EVENT.year;
+    const tag = $("#hero-tag");
+    if (tag) tag.innerHTML = `${esc(EVENT.tagline[0])}<span>${esc(EVENT.tagline[1])}</span>`;
+    const rt = $("#reg-title"); if (rt) rt.textContent = EVENT.name;
+
+    const meta = $("#hero-meta");
+    if (meta) meta.innerHTML =
+      `<span class="chip-meta">${ico("calendar")}${esc(EVENT.date)}</span>` +
+      `<span class="chip-meta">${ico("pin")}${esc(EVENT.venue)}</span>`;
+
+    const zg = $("#zone-grid");
+    if (zg) zg.innerHTML = ZONES.map((z) => `
+      <article class="hud hud-lift zone">
+        <div class="tile">${ico(z.icon)}</div>
+        <h3>${esc(z.title)}</h3>
+        <p>${esc(z.text)}</p>
+        <span class="bar"><i></i></span>
+      </article>`).join("");
+
+    const mq = $("#marquee-track");
+    if (mq) {
+      const items = MARQUEE.map(([i, t]) => `<span class="marquee-item">${ico(i)}${esc(t)}</span>`).join("");
+      mq.innerHTML = items + items; // duplicated for a seamless loop
+    }
+  }
+
+  function initCountdown() {
+    const el = $("#countdown");
+    if (!el || !EVENT.startISO) return;
+    const target = new Date(EVENT.startISO).getTime();
+    if (!isFinite(target)) return;
+    const box = (v, l) => `<div class="cd-box"><b>${String(v).padStart(2, "0")}</b><span>${l}</span></div>`;
+    const tick = () => {
+      const ms = target - Date.now();
+      if (ms <= 0) { el.hidden = true; return false; }
+      const s = Math.floor(ms / 1000);
+      el.innerHTML = box(Math.floor(s / 86400), "days") + box(Math.floor(s % 86400 / 3600), "hours") + box(Math.floor(s % 3600 / 60), "mins") + box(s % 60, "secs");
+      el.hidden = false;
+      return true;
+    };
+    if (tick()) { const t = setInterval(() => { if (!tick()) clearInterval(t); }, 1000); }
+  }
+
+  function initGlitch() {
+    const g = $(".glitch");
+    if (!g || reduceMotion) return;
+    const run = () => { g.classList.remove("is-glitching"); void g.offsetWidth; g.classList.add("is-glitching"); };
+    setTimeout(run, 700);
+    setInterval(run, 7000);
+    g.addEventListener("pointerenter", run);
+  }
+
+  return { mountHeader, mountFooter, mountHome, initCountdown, initGlitch };
+})();
+
+/* ---------------------------------------------------------------------
+   Router (hash based). Unknown hashes that match an element id
+   (e.g. #zones) scroll to that section on the home page.
+   --------------------------------------------------------------------- */
+const PAGES = ["index", "register", "ticket", "verify"];
+const TITLES = { index: "", register: "Register · ", ticket: "My pass · ", verify: "Admin · " };
+
+function showPage() {
+  const h = (location.hash || "").slice(1);
+  const route = PAGES.includes(h) ? h : "index";
+
+  $$(".page").forEach((el) => {
+    const show = el.dataset.page === route;
+    if (el.hidden === show) el.hidden = !show;
+  });
+  Shell.mountHeader(route);
+  document.title = `${TITLES[route]}${EVENT.name} · BIT Wardha`;
+
+  if (route === "ticket") Ticket.render();
+  if (route === "verify") Admin.onShow(); else Admin.stop();
+
+  if (h && !PAGES.includes(h)) {
+    const target = document.getElementById(h);
+    if (target) { requestAnimationFrame(() => target.scrollIntoView({ behavior: "smooth", block: "start" })); return; }
+  }
+  window.scrollTo(0, 0);
+}
+
+/* ---------------------------------------------------------------------
+   Pointer effects: HUD spotlight + 3D tilt on the pass
+   --------------------------------------------------------------------- */
+(function pointerFx() {
+  let raf = 0;
+  document.addEventListener("pointermove", (e) => {
+    const c = e.target.closest && e.target.closest(".hud");
+    if (!c || raf) return;
+    const x = e.clientX, y = e.clientY;
+    raf = requestAnimationFrame(() => {
+      raf = 0;
+      const r = c.getBoundingClientRect();
+      c.style.setProperty("--mx", x - r.left + "px");
+      c.style.setProperty("--my", y - r.top + "px");
+    });
+  });
+
+  const canHover = window.matchMedia && window.matchMedia("(hover: hover)").matches;
+  const pass = $("#pass");
+  if (pass && canHover && !reduceMotion) {
+    pass.addEventListener("pointermove", (e) => {
+      const r = pass.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+      pass.style.setProperty("--ry", ((px - 0.5) * 10).toFixed(2) + "deg");
+      pass.style.setProperty("--rx", ((0.5 - py) * 8).toFixed(2) + "deg");
+      pass.style.setProperty("--gx", (px * 100).toFixed(1) + "%");
+      pass.style.setProperty("--gy", (py * 100).toFixed(1) + "%");
+    });
+    pass.addEventListener("pointerleave", () => {
+      pass.style.setProperty("--rx", "0deg"); pass.style.setProperty("--ry", "0deg");
+    });
+  }
+})();
+
+/* ---------------------------------------------------------------------
+   Registration → POST /api/register
+   --------------------------------------------------------------------- */
+const STORAGE_KEY = "lanarena_registration";
+const JUST_KEY = "lanarena_just_registered";
+
+function saveRegistration(reg) {
+  const raw = JSON.stringify(reg);
+  try { sessionStorage.setItem(STORAGE_KEY, raw); } catch {}
+  try { localStorage.setItem(STORAGE_KEY, raw); } catch {}
+}
+function loadRegistration() {
+  let raw = null;
+  try { raw = sessionStorage.getItem(STORAGE_KEY) || localStorage.getItem(STORAGE_KEY); } catch {}
+  if (!raw) return null;
+  try { return JSON.parse(raw); } catch { return null; }
+}
+
+document.addEventListener("click", (e) => {
+  const noop = e.target.closest("[data-noop]");
+  if (noop) e.preventDefault();
+
+  if (e.target.closest("#fill-bit")) {
+    const c = $("#college");
+    c.value = EVENT.college;
+    c.closest(".field").classList.remove("has-error");
+    c.focus();
+  }
+});
+
+document.addEventListener("input", (e) => {
+  const field = e.target.closest && e.target.closest(".field");
+  if (field && field.classList.contains("has-error") && e.target.checkValidity && e.target.checkValidity()) {
+    field.classList.remove("has-error");
+  }
+});
+
+document.addEventListener("submit", async (e) => {
+  if (e.target.id !== "register-form") return;
+  e.preventDefault();
+
+  const form = e.target;
+  const errBox = $("#reg-err");
+  errBox.classList.remove("show");
+
+  let valid = true;
+  $$(".field", form).forEach((field) => {
+    const control = field.querySelector("input, select");
+    if (!control) return;
+    const ok = control.checkValidity();
+    field.classList.toggle("has-error", !ok);
+    if (!ok) valid = false;
+  });
+  if (!valid) {
+    const bad = $(".field.has-error input, .field.has-error select", form);
+    if (bad) bad.focus();
+    return;
+  }
+
+  const btn = $('button[type="submit"]', form);
+  const label = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = `<span class="spinner"></span>Registering…`;
+
+  const data = Object.fromEntries(new FormData(form).entries());
+  let t = null, msg = "Registration failed. Please try again.";
+  try {
+    const res = await fetch("/api/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ fullName: data.fullName, email: data.email, phone: data.phone, college: data.college, course: data.course }),
+    });
+    const json = await res.json().catch(() => ({}));
+    if (res.ok && json.ticket_id) t = json;
+    else if (json.error) msg = json.error;
+  } catch (err) {
+    console.error("Registration failed:", err);
+    msg = "Network error. Check your connection and try again.";
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = label;
+
+  if (!t) {
+    errBox.textContent = msg;
+    errBox.classList.add("show");
+    return;
+  }
+
+  saveRegistration({
+    fullName: data.fullName, email: data.email, phone: data.phone,
+    college: data.college, course: data.course, ticketId: t.ticket_id,
+  });
+  try { sessionStorage.setItem(JUST_KEY, "1"); } catch {}
+  form.reset();
+  window.location.hash = "#ticket";
+});
+
+/* ---------------------------------------------------------------------
+   Ticket page: pass, QR, copy, PDF, share, email, confetti
+   --------------------------------------------------------------------- */
+const Ticket = (() => {
+  function confetti() {
+    if (reduceMotion) return;
+    const cv = document.createElement("canvas");
+    cv.style.cssText = "position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:200";
+    document.body.appendChild(cv);
+    const ctx = cv.getContext("2d");
+    if (!ctx) { cv.remove(); return; }
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const W = (cv.width = innerWidth * dpr), H = (cv.height = innerHeight * dpr);
+    const colors = ["#27e8ff", "#ff3d9a", "#8b5cf6", "#4dffa0", "#ffb84d"];
+    const parts = Array.from({ length: 110 }, () => ({
+      x: W / 2 + (Math.random() - 0.5) * W * 0.3, y: H * 0.32,
+      vx: (Math.random() - 0.5) * 16 * dpr, vy: (-Math.random() * 15 - 5) * dpr,
+      s: (Math.random() * 7 + 4) * dpr, r: Math.random() * 6, vr: (Math.random() - 0.5) * 0.4,
+      c: colors[(Math.random() * colors.length) | 0],
+    }));
+    const start = performance.now();
+    (function frame(now) {
+      const t = now - start;
+      ctx.clearRect(0, 0, W, H);
+      parts.forEach((p) => {
+        p.vy += 0.42 * dpr; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+        ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r);
+        ctx.globalAlpha = Math.max(0, 1 - t / 2600);
+        ctx.fillStyle = p.c; ctx.fillRect(-p.s / 2, -p.s / 2, p.s, p.s * 0.6);
+        ctx.restore();
+      });
+      if (t < 2600) requestAnimationFrame(frame); else cv.remove();
+    })(start);
+  }
+
+  function buildPdf(reg) {
+    if (!window.jspdf || !window.jspdf.jsPDF) throw new Error("jsPDF failed to load");
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ unit: "pt", format: [360, 560] });
+
+    pdf.setFillColor(7, 4, 26); pdf.rect(0, 0, 360, 560, "F");
+    pdf.setFillColor(39, 232, 255); pdf.rect(0, 0, 180, 6, "F");
+    pdf.setFillColor(255, 61, 154); pdf.rect(180, 0, 180, 6, "F");
+
+    pdf.setTextColor(255, 255, 255); pdf.setFont("helvetica", "bold"); pdf.setFontSize(26);
+    pdf.text(EVENT.name, 28, 58);
+    pdf.setTextColor(39, 232, 255); pdf.setFontSize(10);
+    pdf.text("PLAYER ACCESS PASS", 28, 78);
+    pdf.setTextColor(170, 162, 211); pdf.setFont("helvetica", "normal"); pdf.setFontSize(10);
+    pdf.text(EVENT.college, 28, 96);
+
+    pdf.setFillColor(19, 12, 46); pdf.setDrawColor(70, 56, 130);
+    pdf.roundedRect(20, 116, 320, 418, 10, 10, "FD");
+
+    pdf.setTextColor(255, 255, 255); pdf.setFont("helvetica", "bold"); pdf.setFontSize(18);
+    const nameLines = pdf.splitTextToSize(reg.fullName, 280);
+    pdf.text(nameLines, 40, 148);
+    let y = 148 + nameLines.length * 22 + 8;
+
+    const rows = [["COLLEGE", reg.college], ["COURSE", reg.course], ["DATE", EVENT.date], ["VENUE", EVENT.venue]];
+    rows.forEach(([k, v]) => {
+      pdf.setFont("helvetica", "normal"); pdf.setFontSize(8); pdf.setTextColor(124, 116, 169);
+      pdf.text(k, 40, y);
+      pdf.setFont("helvetica", "bold"); pdf.setFontSize(11); pdf.setTextColor(255, 255, 255);
+      const lines = pdf.splitTextToSize(String(v), 280);
+      pdf.text(lines, 40, y + 14);
+      y += 14 + lines.length * 13 + 12;
+    });
+
+    const qrCanvas = $("#qrcode canvas");
+    const boxY = Math.max(y + 6, 330);
+    pdf.setFillColor(255, 255, 255); pdf.roundedRect(110, boxY, 140, 140, 10, 10, "F");
+    if (qrCanvas) pdf.addImage(qrCanvas.toDataURL("image/png"), "PNG", 120, boxY + 10, 120, 120);
+
+    pdf.setFont("helvetica", "bold"); pdf.setFontSize(15); pdf.setTextColor(39, 232, 255);
+    pdf.text(reg.ticketId, 180, boxY + 164, { align: "center" });
+    pdf.setFont("helvetica", "normal"); pdf.setFontSize(8); pdf.setTextColor(170, 162, 211);
+    pdf.text("Show this QR code at the gate. One entry per pass.", 180, boxY + 180, { align: "center" });
+    pdf.setFontSize(7); pdf.setTextColor(124, 116, 169);
+    pdf.text("Developed by Piyush Deshkar", 180, 550, { align: "center" });
+    return pdf;
+  }
+
+  function render() {
+    const reg = loadRegistration();
+    const empty = $("#ticket-empty"), view = $("#ticket-view");
+    if (!reg || !reg.ticketId) { empty.hidden = false; view.hidden = true; return; }
+    empty.hidden = true; view.hidden = false;
+
+    const first = String(reg.fullName || "").trim().split(/\s+/)[0] || "Player";
+    $("#ticket-heading").textContent = `You're in, ${first}!`;
+    $("#pass-event").textContent = EVENT.name;
+    $("#pass-name").textContent = reg.fullName;
+    $("#pass-college").textContent = reg.college;
+    $("#pass-course").textContent = reg.course;
+    $("#pass-date").textContent = EVENT.date;
+    $("#pass-venue").textContent = EVENT.venue;
+    $("#ticket-id-value").textContent = reg.ticketId;
+
+    // QR payload = the ticket ID only (short → big modules → scans fast at the gate)
+    const qr = $("#qrcode");
+    qr.innerHTML = "";
+    try {
+      new QRCode(qr, { text: reg.ticketId, width: 132, height: 132, colorDark: "#07041a", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.H });
+    } catch (err) {
+      console.error("QR failed:", err);
+      qr.textContent = reg.ticketId;
+    }
+
+    const copyBtn = $("#copy-ticket-id");
+    copyBtn.onclick = async () => {
+      try { await navigator.clipboard.writeText(reg.ticketId); } catch { return; }
+      copyBtn.classList.add("is-copied");
+      const em = $("em", copyBtn); const old = em.textContent; em.textContent = "Copied";
+      setTimeout(() => { copyBtn.classList.remove("is-copied"); em.textContent = old; }, 1500);
+    };
+
+    $("#email-ticket-btn").onclick = (ev) => {
+      ev.preventDefault();
+      const subject = encodeURIComponent(`Your ${EVENT.name} pass — ${reg.ticketId}`);
+      const body = encodeURIComponent(
+        `Hi ${reg.fullName},\n\nYour pass for ${EVENT.name} is confirmed.\n\n` +
+        `Ticket ID: ${reg.ticketId}\nDate: ${EVENT.date}\nVenue: ${EVENT.venue}\n\n` +
+        `Show the QR code from your pass at the gate.\n\n— ${EVENT.name}`
+      );
+      window.location.href = `mailto:${reg.email}?subject=${subject}&body=${body}`;
+    };
+
+    const dl = $("#download-pdf-btn");
+    dl.onclick = () => {
+      const old = dl.innerHTML; dl.disabled = true; dl.innerHTML = `<span class="spinner"></span>Preparing pass…`;
+      try { buildPdf(reg).save(`${EVENT.name.replace(/\s+/g, "-")}-${reg.ticketId}.pdf`); }
+      catch (err) { console.error(err); alert("Couldn't generate the PDF. Please try again."); }
+      finally { dl.disabled = false; dl.innerHTML = old; }
+    };
+
+    const sh = $("#share-ticket-btn");
+    sh.onclick = async () => {
+      const old = sh.innerHTML; sh.disabled = true; sh.innerHTML = `<span class="spinner"></span>Preparing…`;
+      try {
+        const pdf = buildPdf(reg);
+        const name = `${EVENT.name.replace(/\s+/g, "-")}-${reg.ticketId}.pdf`;
+        const file = new File([pdf.output("blob")], name, { type: "application/pdf" });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          await navigator.share({ files: [file], title: `My ${EVENT.name} pass`, text: `${EVENT.name} — ${reg.ticketId}` });
+        } else pdf.save(name);
+      } catch (err) { if (err && err.name !== "AbortError") console.error("Share failed:", err); }
+      finally { sh.disabled = false; sh.innerHTML = old; }
+    };
+
+    let just = false;
+    try { just = sessionStorage.getItem(JUST_KEY) === "1"; sessionStorage.removeItem(JUST_KEY); } catch {}
+    if (just) confetti();
+  }
+
+  return { render };
+})();
+
+/* ---------------------------------------------------------------------
+   Admin console: password login, live stats, camera QR scanner,
+   look up → admit → undo. All calls go through POST /api/admin.
+   --------------------------------------------------------------------- */
+const Admin = (() => {
+  const PW_KEY = "lanarena_admin_pw";
+  let pw = "";
+  try { pw = sessionStorage.getItem(PW_KEY) || ""; } catch {}
+
+  let stream = null, rafId = 0, detector = null, camOn = false, paused = false, detecting = false;
+  let lastCode = "", lastAt = 0, lastTick = 0, canvas = null, ctx = null, statsTimer = 0, current = null, audioCtx = null;
+
+  /* ---- api ---- */
+  async function api(body) {
+    try {
+      const res = await fetch("/api/admin", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(Object.assign({ password: pw }, body)),
+      });
+      const json = await res.json().catch(() => ({}));
+      return { status: res.status, json };
+    } catch {
+      return { status: 0, json: { error: "Network error. Check your connection." } };
+    }
+  }
+
+  /* ---- views ---- */
+  function showLogin(msg) {
+    stopCam(); clearInterval(statsTimer);
+    pw = ""; try { sessionStorage.removeItem(PW_KEY); } catch {}
+    $("#admin-console").hidden = true;
+    $("#admin-login").hidden = false;
+    const err = $("#admin-err");
+    err.classList.toggle("show", !!msg); err.textContent = msg || "";
+  }
+
+  function showConsole(stats) {
+    $("#admin-login").hidden = true;
+    $("#admin-console").hidden = false;
+    applyStats(stats);
+    resetResult();
+    clearInterval(statsTimer);
+    statsTimer = setInterval(refreshStats, 20000);
+  }
+
+  function countTo(el, to) {
+    const from = parseInt(el.textContent, 10) || 0;
+    if (from === to || reduceMotion) { el.textContent = to; return; }
+    const t0 = performance.now(), dur = 600;
+    (function step(now) {
+      const p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(from + (to - from) * e);
+      if (p < 1) requestAnimationFrame(step);
+    })(t0);
+  }
+
+  const fmtTime = (iso) => { try { return new Date(iso).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }); } catch { return ""; } };
+
+  function applyStats(s) {
+    if (!s) return;
+    const total = s.total || 0, inn = s.checked_in || 0;
+    countTo($("#st-total"), total); countTo($("#st-in"), inn); countTo($("#st-left"), Math.max(0, total - inn));
+    $("#st-bar").style.width = (total ? Math.round((inn / total) * 100) : 0) + "%";
+    const ul = $("#recent-list");
+    const rows = Array.isArray(s.recent) ? s.recent : [];
+    ul.innerHTML = rows.length
+      ? rows.map((r) => `<li><div><b>${esc(r.full_name)}</b><small>${esc(r.ticket_id)} · ${esc(r.college)}</small></div><time>${esc(fmtTime(r.checked_in_at))}</time></li>`).join("")
+      : `<li class="none">No one has checked in yet.</li>`;
+  }
+
+  async function refreshStats() {
+    if (document.hidden) return;
+    const { status, json } = await api({ action: "stats" });
+    if (status === 401) return showLogin("Session expired. Enter the password again.");
+    if (status === 200) applyStats(json);
+  }
+
+  async function onShow() {
+    if (!pw) { showLogin(); return; }
+    $("#admin-login").hidden = true; $("#admin-console").hidden = true;
+    const { status, json } = await api({ action: "stats" });
+    if (status === 200) showConsole(json);
+    else showLogin(status === 401 ? "Session expired. Enter the password again." : (json.error || ""));
+  }
+
+  /* ---- result panel ---- */
+  function resetResult() {
+    current = null; paused = false; lastCode = "";
+    $("#result").innerHTML = `
+      <div class="res-idle">
+        <div class="tile">${ico("scan")}</div>
+        <h3>Waiting for a scan</h3>
+        <p>Point the camera at a player's QR code, or type the ticket ID below.</p>
+      </div>`;
+  }
+
+  function renderLoading() {
+    $("#result").innerHTML = `<div class="res-idle"><div class="tile"><span class="spinner" style="border-color:rgba(139,92,246,.35);border-top-color:#8b5cf6"></span></div><h3>Checking ticket…</h3></div>`;
+  }
+
+  function renderResult(d) {
+    current = d;
+    let cls, icon, title, sub, actions;
+    if (!d.valid) {
+      cls = "bad"; icon = "x"; title = "Ticket not found"; sub = "No registration matches this code.";
+      actions = `<button class="btn btn-secondary" data-act="next">${ico("scan")}Scan next</button>`;
+      tone("bad");
+    } else if (!d.checked_in) {
+      cls = "ok"; icon = "check"; title = "Valid ticket"; sub = "Not checked in yet.";
+      actions = `<button class="btn btn-success" data-act="checkin">${ico("check")}Admit player</button>
+                 <button class="btn btn-secondary" data-act="next">${ico("scan")}Scan next</button>`;
+      tone("ok");
+    } else if (d.just_checked_in) {
+      cls = "ok"; icon = "check"; title = "Player admitted"; sub = `Checked in at ${fmtTime(d.checked_in_at)}.`;
+      actions = `<button class="btn btn-success" data-act="next">${ico("scan")}Scan next</button>
+                 <button class="btn btn-danger btn-sm" data-act="undo">${ico("undo")}Undo check-in</button>`;
+      tone("ok");
+    } else {
+      cls = "warn"; icon = "alert"; title = "Already checked in"; sub = `Entered at ${fmtTime(d.checked_in_at)}. Do not admit again.`;
+      actions = `<button class="btn btn-secondary" data-act="next">${ico("scan")}Scan next</button>
+                 <button class="btn btn-danger btn-sm" data-act="undo">${ico("undo")}Undo check-in</button>`;
+      tone("warn");
+    }
+    const who = d.valid ? `<div class="res-name">${esc(d.full_name)}</div><p class="res-meta">${esc(d.college)} · ${esc(d.course)}</p>` : "";
+    $("#result").innerHTML = `
+      <div class="res ${cls}">
+        <div class="res-head"><span class="res-badge">${ico(icon)}</span><div><div class="res-title">${title}</div><div class="res-sub">${sub}</div></div></div>
+        ${who}
+        <span class="res-id">${esc(d.ticket_id)}</span>
+        <div class="res-actions">${actions}</div>
+      </div>`;
+    if (navigator.vibrate) navigator.vibrate(d.valid && !d.checked_in ? 60 : [80, 60, 80]);
+  }
+
+  function renderError(msg) {
+    current = null;
+    $("#result").innerHTML = `
+      <div class="res bad">
+        <div class="res-head"><span class="res-badge">${ico("alert")}</span><div><div class="res-title">Something went wrong</div><div class="res-sub">${esc(msg)}</div></div></div>
+        <div class="res-actions"><button class="btn btn-secondary" data-act="next">${ico("scan")}Try again</button></div>
+      </div>`;
+  }
+
+  async function act(action, id) {
+    paused = true; renderLoading();
+    const { status, json } = await api({ action, ticket_id: id });
+    if (status === 401) return showLogin("Session expired. Enter the password again.");
+    if (status !== 200) return renderError(json.error || "Request failed. Try again.");
+    renderResult(json);
+    refreshStats();
+  }
+
+  /* ---- ticket id parsing (plain ID, or JSON from older QR codes) ---- */
+  function extractId(raw) {
+    let t = String(raw || "").trim();
+    try { const o = JSON.parse(t); if (o && typeof o === "object") t = o.ticketId || o.ticket_id || ""; } catch {}
+    t = String(t).toUpperCase();
+    const m = t.match(/[A-Z0-9]{2,10}-\d{6}/);
+    if (m) return m[0];
+    return /^[A-Z0-9-]{4,40}$/.test(t) ? t : "";
+  }
+
+  /* ---- sound ---- */
+  function tone(kind) {
+    try {
+      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+      const seq = kind === "ok" ? [[880, .09], [1320, .12]] : kind === "warn" ? [[520, .12], [520, .12]] : [[180, .28]];
+      let t = audioCtx.currentTime;
+      seq.forEach(([f, d]) => {
+        const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+        o.type = kind === "bad" ? "sawtooth" : "sine"; o.frequency.value = f;
+        g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.18, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+        o.connect(g).connect(audioCtx.destination); o.start(t); o.stop(t + d + 0.02); t += d + 0.04;
+      });
+    } catch {}
+  }
+
+  /* ---- camera scanner ---- */
+  function setMsg(text) { const el = $("#scan-msg-text"); if (el) el.textContent = text; }
+  function setToggle(on) { $("#scan-toggle span").textContent = on ? "Stop camera" : "Start camera"; }
+
+  async function startCam() {
+    if (camOn) return;
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { setMsg("This browser can't use the camera. Type the ticket ID instead."); return; }
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" }, width: { ideal: 1280 }, height: { ideal: 720 } }, audio: false });
+    } catch (e) {
+      setMsg(e && e.name === "NotAllowedError" ? "Camera access is blocked. Allow it in the browser and try again." : "Couldn't start the camera. Type the ticket ID instead.");
+      return;
+    }
+    const v = $("#scan-video");
+    v.srcObject = stream;
+    try { await v.play(); } catch {}
+    camOn = true; paused = !!current; setToggle(true);
+    $("#viewport").classList.add("live-cam");
+    detector = null;
+    if ("BarcodeDetector" in window) { try { detector = new BarcodeDetector({ formats: ["qr_code"] }); } catch { detector = null; } }
+    rafId = requestAnimationFrame(loop);
+  }
+
+  function stopCam() {
+    camOn = false; cancelAnimationFrame(rafId);
+    if (stream) { stream.getTracks().forEach((t) => t.stop()); stream = null; }
+    const v = $("#scan-video"); if (v) v.srcObject = null;
+    const vp = $("#viewport"); if (vp) vp.classList.remove("live-cam");
+    if ($("#scan-toggle")) { setToggle(false); setMsg("Camera is off"); }
+  }
+
+  async function loop(ts) {
+    if (!camOn) return;
+    rafId = requestAnimationFrame(loop);
+    if (paused || detecting || ts - lastTick < 160) return;
+    lastTick = ts;
+    const v = $("#scan-video");
+    if (!v || v.readyState < 2 || !v.videoWidth) return;
+    detecting = true;
+    let text = "";
+    try {
+      if (detector) {
+        const codes = await detector.detect(v);
+        if (codes.length) text = codes[0].rawValue;
+      } else if (window.jsQR) {
+        if (!canvas) { canvas = document.createElement("canvas"); }
+        const s = Math.min(1, 640 / v.videoWidth);
+        canvas.width = Math.round(v.videoWidth * s); canvas.height = Math.round(v.videoHeight * s);
+        if (!ctx) ctx = canvas.getContext("2d", { willReadFrequently: true });
+        ctx.drawImage(v, 0, 0, canvas.width, canvas.height);
+        const img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const code = window.jsQR(img.data, img.width, img.height, { inversionAttempts: "dontInvert" });
+        if (code) text = code.data;
+      }
+    } catch {}
+    detecting = false;
+    if (text) onCode(text);
+  }
+
+  function onCode(text) {
+    const id = extractId(text);
+    if (!id) return;
+    const now = Date.now();
+    if (id === lastCode && now - lastAt < 3000) return;
+    lastCode = id; lastAt = now;
+    act("lookup", id);
+  }
+
+  /* ---- events ---- */
+  function init() {
+    $("#admin-login-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const input = $("#admin-pass"), btn = $("#admin-login-btn");
+      if (!input.value) { $("#admin-err").textContent = "Enter the admin password."; $("#admin-err").classList.add("show"); return; }
+      const old = btn.innerHTML; btn.disabled = true; btn.innerHTML = `<span class="spinner"></span>Checking…`;
+      pw = input.value;
+      const { status, json } = await api({ action: "stats" });
+      btn.disabled = false; btn.innerHTML = old;
+      if (status === 200) {
+        try { sessionStorage.setItem(PW_KEY, pw); } catch {}
+        input.value = ""; showConsole(json);
+      } else {
+        const m = status === 401 ? "Wrong password. Try again." : (json.error || "Could not sign in. Try again.");
+        pw = ""; showLogin(m); input.focus();
+      }
+    });
+
+    $("#admin-peek").addEventListener("click", (e) => {
+      const b = e.currentTarget, i = $("#admin-pass"), show = i.type === "password";
+      i.type = show ? "text" : "password"; b.setAttribute("aria-pressed", String(show));
+      b.setAttribute("aria-label", show ? "Hide password" : "Show password");
+    });
+
+    $("#admin-logout").addEventListener("click", () => showLogin());
+    $("#scan-toggle").addEventListener("click", () => (camOn ? stopCam() : startCam()));
+
+    $("#manual-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const input = $("#manual-id"), id = extractId(input.value);
+      if (!id) { renderError("Enter a valid ticket ID, like LAN26-123456."); return; }
+      input.value = ""; lastCode = id; lastAt = Date.now();
+      act("lookup", id);
+    });
+
+    $("#result").addEventListener("click", async (e) => {
+      const b = e.target.closest("[data-act]"); if (!b) return;
+      const a = b.dataset.act;
+      if (a === "next") return resetResult();
+      if (!current) return;
+      if (a === "undo" && !confirm(`Undo check-in for ${current.full_name}?`)) return;
+      act(a, current.ticket_id);
+    });
+
+    document.addEventListener("visibilitychange", () => { if (document.hidden) stopCam(); });
+  }
+
+  return { init, onShow, stop() { stopCam(); clearInterval(statsTimer); } };
+})();
+
+/* ---------------------------------------------------------------------
+   Boot
+   --------------------------------------------------------------------- */
+document.addEventListener("DOMContentLoaded", () => {
+  Shell.mountHome();
+  Shell.mountFooter();
+  Shell.initCountdown();
+  Shell.initGlitch();
+  Admin.init();
+  window.addEventListener("hashchange", showPage);
+  showPage();
+});
+</script>
+</body>
+</html>
