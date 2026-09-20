@@ -1,0 +1,2169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#070a1e" />
+<title>EventPass — LAN ARENA 2026 · BIT Wardha</title>
+<meta name="description" content="Register for LAN ARENA 2026 at Bajaj Institute of Technology, Wardha and get your digital pass in seconds." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js" defer></script>
+<style>
+/* ===================================================================
+   EventPass — Theme Tokens
+   Dark navy + vibrant purple/blue system for a college tech-event
+   ticketing platform.
+   =================================================================== */
+
+:root {
+  /* Surfaces */
+  --bg-base: #070a1e;
+  --bg-panel: #0e1330;
+  --bg-elevated: #141a3d;
+  --bg-elevated-hover: #1a2150;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+
+  /* Brand */
+  --accent-purple: #6c5ce7;
+  --accent-purple-dim: #5646c9;
+  --accent-blue: #4e6bff;
+  --accent-gradient: linear-gradient(135deg, #7c6cf0 0%, #4e6bff 100%);
+  --accent-gradient-soft: linear-gradient(135deg, rgba(124, 108, 240, 0.16), rgba(78, 107, 255, 0.10));
+
+  /* Feedback */
+  --success: #22c55e;
+  --success-soft: rgba(34, 197, 94, 0.12);
+  --warning: #f5a623;
+  --danger: #ef4444;
+
+  /* Text */
+  --text-primary: #f4f5fb;
+  --text-secondary: #a7addc;
+  --text-muted: #6f76a6;
+  --text-on-accent: #ffffff;
+
+  /* Type */
+  --font-display: "Poppins", "Segoe UI", sans-serif;
+  --font-body: "Poppins", "Segoe UI", sans-serif;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-pill: 999px;
+
+  /* Shadow */
+  --shadow-panel: 0 20px 60px -25px rgba(20, 20, 60, 0.6);
+  --shadow-glow: 0 0 0 1px rgba(124, 108, 240, 0.25), 0 12px 40px -12px rgba(108, 92, 231, 0.45);
+
+  /* Layout */
+  --container-width: 1180px;
+  --header-height: 76px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(1200px 600px at 85% -10%, rgba(78, 107, 255, 0.16), transparent 60%),
+    radial-gradient(900px 500px at -10% 20%, rgba(108, 92, 231, 0.14), transparent 55%),
+    var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--text-primary);
+  line-height: 1.15;
+  margin: 0 0 0.5em;
+  letter-spacing: -0.01em;
+}
+
+h1 { font-size: clamp(2.1rem, 4.2vw, 3.4rem); font-weight: 700; }
+h2 { font-size: clamp(1.5rem, 2.6vw, 2rem); font-weight: 600; }
+h3 { font-size: 1.15rem; font-weight: 600; }
+
+p { margin: 0 0 1em; color: var(--text-secondary); }
+
+a { color: inherit; text-decoration: none; }
+
+ul { list-style: none; margin: 0; padding: 0; }
+
+img, svg { display: block; max-width: 100%; }
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+::selection {
+  background: var(--accent-purple);
+  color: #fff;
+}
+
+/* Visible keyboard focus everywhere */
+:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.text-muted { color: var(--text-muted); }
+.text-secondary { color: var(--text-secondary); }
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent-blue);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ===================================================================
+   EventPass — Reusable Components
+   =================================================================== */
+
+/* ---------- Site header / nav ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(7, 10, 30, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.nav {
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.brand-mark {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-gradient);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.brand-mark svg { width: 18px; height: 18px; }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav-links a {
+  font-size: 0.94rem;
+  color: var(--text-secondary);
+  transition: color 0.15s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.is-active {
+  color: var(--text-primary);
+}
+
+.nav-actions { display: flex; align-items: center; gap: 12px; }
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.nav-toggle svg { width: 20px; height: 20px; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn svg { width: 16px; height: 16px; }
+
+.btn-primary {
+  background: var(--accent-gradient);
+  color: var(--text-on-accent);
+  box-shadow: var(--shadow-glow);
+}
+
+.btn-primary:hover { transform: translateY(-1px); }
+
+.btn-secondary {
+  background: var(--bg-elevated);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+.btn-secondary:hover { background: var(--bg-elevated-hover); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.btn-ghost:hover { color: var(--text-primary); }
+
+.btn-block { width: 100%; }
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ---------- Cards / panels ---------- */
+.card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+}
+
+.card-elevated {
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-panel);
+}
+
+/* ---------- Badges / status pills ---------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.badge-success { background: var(--success-soft); color: var(--success); }
+.badge-info { background: var(--accent-gradient-soft); color: var(--accent-blue); }
+
+/* ---------- Form elements ---------- */
+.field { margin-bottom: 18px; }
+
+.field label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.field .required { color: var(--accent-blue); }
+
+.input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrap svg {
+  position: absolute;
+  left: 14px;
+  width: 18px;
+  height: 18px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  color: var(--text-primary);
+}
+
+.input-wrap input,
+.input-wrap select {
+  padding-left: 42px;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(78, 107, 255, 0.18);
+}
+
+.field-hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+
+/* ---------- Section wrapper ---------- */
+.section { padding: 72px 0; }
+.section-tight { padding: 40px 0; }
+
+/* ---------- Footer ---------- */
+.site-footer {
+  border-top: 1px solid var(--border-subtle);
+  padding: 32px 0;
+  margin-top: auto;
+}
+
+.footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 860px) {
+  .nav-links { display: none; }
+  .nav-toggle { display: inline-flex; }
+
+  .nav-links.nav-links-open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    background: var(--bg-panel);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 16px 24px;
+    gap: 18px;
+  }
+}
+
+@media (max-width: 560px) {
+  .section { padding: 48px 0; }
+  .card { padding: 20px; }
+}
+
+/* ===================================================================
+   EventPass — Page-specific layout
+   =================================================================== */
+
+.page-body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main { flex: 1; }
+
+/* ---------- Landing: Hero ---------- */
+.hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  margin-top: 28px;
+  padding: 64px 48px;
+  background:
+    linear-gradient(180deg, rgba(7, 10, 30, 0.2), rgba(7, 10, 30, 0.85)),
+    radial-gradient(900px 420px at 80% 0%, rgba(124, 108, 240, 0.35), transparent 60%);
+  border: 1px solid var(--border-subtle);
+}
+
+.hero-content { max-width: 640px; }
+
+.hero-title .accent {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-lede {
+  font-size: 1.05rem;
+  max-width: 520px;
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  margin: 28px 0 8px;
+}
+
+.hero-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+}
+
+.hero-meta-item svg {
+  width: 18px;
+  height: 18px;
+  color: var(--accent-blue);
+  flex-shrink: 0;
+}
+
+/* ---------- Landing: QR / register-CTA strip ---------- */
+.qr-strip {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 28px;
+  padding: 24px;
+  flex-wrap: wrap;
+}
+
+.qr-box {
+  width: 96px;
+  height: 96px;
+  border-radius: var(--radius-md);
+  background: #fff;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.qr-box svg { width: 76px; height: 76px; }
+
+.qr-copy h3 { margin-bottom: 4px; }
+
+.qr-copy .field-hint { margin-top: 8px; }
+
+/* ---------- Feature grid (landing, supporting section) ---------- */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.feature-card .icon-tile {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-gradient-soft);
+  display: grid;
+  place-items: center;
+  margin-bottom: 16px;
+}
+
+.feature-card .icon-tile svg { width: 22px; height: 22px; color: var(--accent-blue); }
+
+@media (max-width: 860px) {
+  .hero { padding: 44px 26px; }
+  .feature-grid { grid-template-columns: 1fr; }
+}
+
+/* ---------- Generic "page under construction" shell ---------- */
+/* Used by register / ticket / verify placeholder pages until each
+   flow step is implemented in a later pass. */
+.stub-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - var(--header-height));
+  padding: 48px 0;
+}
+
+.stub-card {
+  max-width: 460px;
+  width: 100%;
+  text-align: center;
+}
+
+.stub-card .icon-tile {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
+  background: var(--accent-gradient-soft);
+  display: grid;
+  place-items: center;
+  margin: 0 auto 20px;
+}
+
+.stub-card .icon-tile svg { width: 26px; height: 26px; color: var(--accent-blue); }
+
+.stub-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 24px 0;
+  text-align: left;
+}
+
+.stub-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  padding: 10px 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+}
+
+.stub-step.is-current {
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+  background: var(--bg-elevated);
+}
+
+.stub-step .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.stub-step.is-current .dot { background: var(--accent-blue); }
+
+.page[hidden] { display: none; }
+
+/* ---------- Registration page (light card on dark canvas) ---------- */
+.register-page {
+  display: flex;
+  justify-content: center;
+  padding: 48px 0 72px;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 480px;
+  background: #ffffff;
+  color: #1c2140;
+  border-radius: var(--radius-lg);
+  padding: 36px 32px 32px;
+  box-shadow: 0 24px 60px -20px rgba(8, 10, 30, 0.55);
+}
+
+.register-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #1c2140;
+  margin-bottom: 22px;
+}
+
+.register-brand .brand-mark {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-gradient);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.register-brand .brand-mark svg { width: 17px; height: 17px; }
+
+.register-title {
+  color: #1c2140;
+  font-size: 1.5rem;
+  margin-bottom: 4px;
+}
+
+.register-subtitle {
+  color: #6b7093;
+  margin-bottom: 26px;
+  font-size: 0.94rem;
+}
+
+.register-card .field label {
+  color: #1c2140;
+}
+
+.register-card .field input,
+.register-card .field select {
+  background: #f4f5fb;
+  border-color: #e4e6f2;
+  color: #1c2140;
+}
+
+.register-card .field input::placeholder {
+  color: #9096b8;
+}
+
+.register-card .field input:focus,
+.register-card .field select:focus {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(78, 107, 255, 0.15);
+}
+
+.register-card .input-wrap svg {
+  color: #9096b8;
+}
+
+.register-card select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b7093' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 16px;
+  padding-right: 40px;
+}
+
+.field-checkbox { margin-bottom: 22px; }
+
+.checkbox-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.86rem;
+  color: #4b5079;
+  cursor: pointer;
+}
+
+.checkbox-row input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: var(--accent-blue);
+  flex-shrink: 0;
+}
+
+.link-accent {
+  color: var(--accent-blue);
+  font-weight: 600;
+}
+
+.link-accent:hover { text-decoration: underline; }
+
+.field-error {
+  display: none;
+  font-size: 0.78rem;
+  color: var(--danger);
+  margin: 6px 0 0;
+}
+
+.field.has-error input,
+.field.has-error select {
+  border-color: var(--danger) !important;
+}
+
+.field.has-error .field-error {
+  display: block;
+}
+
+@media (max-width: 560px) {
+  .register-card { padding: 28px 20px; }
+}
+
+/* ---------- Registration success / ticket page ---------- */
+.ticket-page {
+  display: flex;
+  justify-content: center;
+  padding: 48px 0 72px;
+}
+
+.ticket-card {
+  width: 100%;
+  max-width: 460px;
+  text-align: center;
+}
+
+.success-icon {
+  width: 84px;
+  height: 84px;
+  margin: 0 auto 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #34d399, var(--success));
+  display: grid;
+  place-items: center;
+  box-shadow: 0 16px 40px -12px rgba(34, 197, 94, 0.55);
+}
+
+.success-icon svg { width: 40px; height: 40px; }
+
+.ticket-heading { margin-bottom: 10px; }
+
+.ticket-sub {
+  color: var(--text-secondary);
+  margin-bottom: 26px;
+}
+
+.ticket-id-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.ticket-id-label {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.ticket-id-value {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+}
+
+.icon-btn {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.icon-btn:hover { color: var(--text-primary); border-color: var(--border-strong); }
+.icon-btn svg { width: 17px; height: 17px; }
+.icon-btn.is-copied { color: var(--success); border-color: var(--success); }
+
+.ticket-qr-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.qr-render {
+  width: 132px;
+  height: 132px;
+  background: #fff;
+  border-radius: var(--radius-md);
+  padding: 10px;
+  display: grid;
+  place-items: center;
+}
+
+.qr-render canvas, .qr-render img { border-radius: 4px; }
+
+.info-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  text-align: left;
+  background: var(--accent-gradient-soft);
+  border: 1px solid rgba(124, 108, 240, 0.25);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin-top: 20px;
+  font-size: 0.86rem;
+  color: var(--text-secondary);
+}
+
+.info-box svg { width: 18px; height: 18px; color: var(--accent-blue); flex-shrink: 0; margin-top: 1px; }
+.info-box strong { display: block; color: var(--text-primary); margin-bottom: 2px; font-size: 0.9rem; }
+.info-box p { margin: 0; }
+
+.back-home-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+  font-size: 0.9rem;
+  color: var(--accent-blue);
+  font-weight: 600;
+}
+
+.back-home-link:hover { text-decoration: underline; }
+.back-home-link svg { width: 16px; height: 16px; }
+
+@media (max-width: 560px) {
+  .ticket-id-box { flex-direction: row; }
+}
+
+/* ===================================================================
+   LAN event additions (kept in the same design language)
+   =================================================================== */
+.hero-icons { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px; }
+.game-ico {
+  width: 46px; height: 46px; display: grid; place-items: center; border-radius: 14px;
+  background: var(--bg-elevated); border: 1px solid var(--border-subtle); color: var(--accent-blue);
+  transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+.game-ico svg { width: 22px; height: 22px; }
+.game-ico:hover { transform: translateY(-4px) rotate(-4deg); color: #fff; border-color: var(--accent-purple); box-shadow: var(--shadow-glow); }
+
+.footer-dev { display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); font-size: 0.9rem; }
+.footer-dev svg { width: 16px; height: 16px; color: var(--accent-blue); }
+.footer-dev b { color: var(--text-primary); font-weight: 600; }
+
+/* ---------- Admin console ---------- */
+.admin-page { padding: 40px 24px 24px; max-width: 1000px; }
+.admin-login { max-width: 430px; margin: 24px auto 0; text-align: center; padding: 34px 28px; }
+.admin-login form { text-align: left; }
+.admin-login .icon-tile, .res-idle .icon-tile {
+  width: 56px; height: 56px; margin: 0 auto 16px; display: grid; place-items: center;
+  border-radius: 16px; background: var(--accent-gradient-soft);
+}
+.admin-login .icon-tile svg, .res-idle .icon-tile svg { width: 26px; height: 26px; color: var(--accent-blue); }
+.admin-err { display: none; margin: 0 0 14px; padding: 10px 12px; border-radius: var(--radius-md); font-size: 0.86rem; color: #ff8b8b; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); }
+.admin-err.show { display: block; }
+.input-wrap .peek { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; display: grid; place-items: center; border: 0; border-radius: 8px; background: transparent; color: var(--text-muted); cursor: pointer; }
+.input-wrap .peek:hover, .input-wrap .peek[aria-pressed="true"] { color: var(--accent-blue); }
+.input-wrap .peek svg { position: static; transform: none; width: 18px; height: 18px; pointer-events: none; }
+.input-wrap input[type="password"], .input-wrap input[type="text"].pw { padding-right: 52px; }
+
+.console-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+.console-head h2 { margin: 0; display: flex; align-items: center; gap: 12px; }
+.live-dot { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-body); font-size: 0.75rem; font-weight: 600; color: var(--success); padding: 4px 10px; border-radius: var(--radius-pill); background: var(--success-soft); }
+.live-dot i { width: 7px; height: 7px; border-radius: 50%; background: var(--success); animation: pulseDot 1.4s infinite; }
+@keyframes pulseDot { 50% { opacity: 0.3; } }
+.btn-sm { padding: 9px 16px; font-size: 0.85rem; }
+.btn-success { background: linear-gradient(135deg, #16a34a, #22c55e); color: #04140a; box-shadow: 0 10px 28px -12px rgba(34, 197, 94, 0.7); }
+.btn-success:hover { transform: translateY(-1px); }
+.btn-danger { background: rgba(239, 68, 68, 0.1); color: #ff8b8b; border-color: rgba(239, 68, 68, 0.4); }
+.btn-danger:hover { background: rgba(239, 68, 68, 0.18); }
+
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 0; }
+.stat { padding: 18px 20px; }
+.stat dt { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--text-secondary); margin: 0; }
+.stat dt svg { width: 16px; height: 16px; color: var(--accent-blue); }
+.stat dd { margin: 4px 0 0; font-family: var(--font-display); font-size: 2.2rem; font-weight: 700; line-height: 1.15; font-variant-numeric: tabular-nums; }
+.stat.in dd { color: var(--success); }
+.progress { height: 8px; margin: 16px 0 24px; border-radius: 8px; background: rgba(255, 255, 255, 0.07); overflow: hidden; }
+.progress i { display: block; height: 100%; width: 0; border-radius: 8px; background: var(--accent-gradient); transition: width 0.8s ease; }
+.console-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; }
+.viewport { position: relative; aspect-ratio: 1 / 1; border-radius: var(--radius-lg); overflow: hidden; background: #04061a; border: 1px solid var(--border-subtle); }
+.viewport video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.viewport-msg { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 20px; text-align: center; font-size: 0.9rem; color: var(--text-secondary); }
+.viewport-msg svg { width: 36px; height: 36px; color: var(--accent-purple); }
+.reticle { position: absolute; inset: 14%; pointer-events: none; opacity: 0; transition: opacity 0.3s; }
+.viewport.live-cam .reticle { opacity: 1; }
+.viewport.live-cam .viewport-msg { display: none; }
+.reticle i { position: absolute; width: 30px; height: 30px; border: 3px solid var(--accent-blue); }
+.reticle i:nth-child(1) { left: 0; top: 0; border-right: 0; border-bottom: 0; border-top-left-radius: 8px; }
+.reticle i:nth-child(2) { right: 0; top: 0; border-left: 0; border-bottom: 0; border-top-right-radius: 8px; }
+.reticle i:nth-child(3) { left: 0; bottom: 0; border-right: 0; border-top: 0; border-bottom-left-radius: 8px; }
+.reticle i:nth-child(4) { right: 0; bottom: 0; border-left: 0; border-top: 0; border-bottom-right-radius: 8px; }
+.reticle .laser { position: absolute; left: 6%; right: 6%; height: 2px; background: linear-gradient(90deg, transparent, var(--accent-purple), transparent); animation: laser 2.2s ease-in-out infinite; }
+@keyframes laser { 0%, 100% { top: 6%; } 50% { top: 94%; } }
+.scan-actions { margin-top: 14px; }
+.manual { display: flex; gap: 10px; margin-top: 12px; }
+.manual .input-wrap { flex: 1; }
+.manual input { text-transform: uppercase; }
+.manual .btn { flex: none; }
+.result { min-height: 330px; display: flex; flex-direction: column; justify-content: center; }
+.res-idle { text-align: center; }
+.res-idle h3 { margin-bottom: 4px; }
+.res-idle p { margin: 0; font-size: 0.9rem; }
+.res { animation: resPop 0.3s ease; }
+@keyframes resPop { from { opacity: 0; transform: scale(0.97); } to { opacity: 1; transform: none; } }
+.res-head { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+.res-badge { width: 52px; height: 52px; flex: none; display: grid; place-items: center; border-radius: 16px; }
+.res-badge svg { width: 26px; height: 26px; stroke-width: 2.6; }
+.res-title { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; line-height: 1.2; }
+.res-sub { font-size: 0.85rem; color: var(--text-secondary); margin-top: 2px; }
+.res.ok .res-badge { background: var(--success-soft); color: var(--success); }
+.res.ok .res-title { color: var(--success); }
+.res.warn .res-badge { background: rgba(245, 166, 35, 0.14); color: var(--warning); }
+.res.warn .res-title { color: var(--warning); }
+.res.bad .res-badge { background: rgba(239, 68, 68, 0.14); color: var(--danger); }
+.res.bad .res-title { color: var(--danger); }
+.res-name { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; line-height: 1.2; word-break: break-word; }
+.res-meta { margin: 4px 0 14px; font-size: 0.9rem; }
+.res-id { display: inline-block; margin-bottom: 16px; padding: 6px 12px; border-radius: var(--radius-sm); font-weight: 600; font-size: 0.88rem; color: var(--accent-blue); background: var(--accent-gradient-soft); }
+.res-actions { display: grid; gap: 10px; }
+.recent { margin-top: 18px; }
+.recent h3 { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.recent h3 svg { width: 18px; height: 18px; color: var(--accent-blue); }
+.recent ul { display: grid; gap: 8px; }
+.recent li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; border-radius: var(--radius-md); background: rgba(255, 255, 255, 0.03); }
+.recent li b { display: block; font-size: 0.9rem; font-weight: 600; }
+.recent li small { color: var(--text-muted); font-size: 0.75rem; }
+.recent li time { font-size: 0.8rem; color: var(--success); font-weight: 600; white-space: nowrap; }
+.recent .none { justify-content: center; color: var(--text-muted); font-size: 0.9rem; }
+.spinner { width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.35); border-top-color: #fff; animation: spin 0.7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (max-width: 860px) { .console-grid { grid-template-columns: 1fr; } }
+@media (max-width: 560px) { .stats-grid { gap: 8px; } .stat { padding: 14px 12px; } .stat dd { font-size: 1.6rem; } .stat dt { font-size: 0.7rem; } .manual { flex-direction: column; } }
+
+/* ===================================================================
+   AUTOFIT / RESPONSIVE LAYER
+   Phone (portrait + landscape), tablet, laptop, desktop, ultrawide.
+   Sab kuch fluid (clamp / min / minmax) hai — fixed px widths nahi.
+   Keep this block LAST so it overrides the earlier rules.
+   =================================================================== */
+
+/* --- Fluid root size: text + all rem-based spacing scales with screen --- */
+html {
+  font-size: clamp(15px, 0.875rem + 0.3vw, 19px);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  overflow-x: clip;               /* never allow sideways scroll */
+}
+body {
+  font-size: 1rem;
+  max-width: 100%;
+  overflow-x: clip;
+  min-height: 100vh;
+  min-height: 100dvh;             /* mobile browser toolbar-safe height */
+}
+.page-body { min-height: 100vh; min-height: 100dvh; }
+
+/* Root cause of the "cut off on the right" bug: flex/grid children refuse to
+   shrink below their content width. min-width:0 lets them fit the screen. */
+main, .page, .container, .card, .console-grid > *, .stats-grid > *,
+.nav, .nav-actions, .footer-row > *, .manual .input-wrap,
+.recent li > div, .ticket-id-box > div, .res-head > div { min-width: 0; }
+main { width: 100%; }
+
+img, svg, video, canvas, iframe { max-width: 100%; }
+p, h1, h2, h3, h4, li, .res-name, .res-sub, .recent li small, .footer-row span {
+  overflow-wrap: anywhere;
+}
+
+/* --- Container: fluid side padding + notch / safe-area aware --- */
+.container {
+  max-width: min(var(--container-width), 100%);
+  padding-inline: max(clamp(16px, 4vw, 32px), env(safe-area-inset-left, 0px))
+                  max(clamp(16px, 4vw, 32px), env(safe-area-inset-right, 0px));
+}
+.admin-page {
+  padding-top: clamp(24px, 5vw, 40px);
+  padding-bottom: 24px;
+  max-width: min(1040px, 100%);
+}
+.card { padding: clamp(16px, 3.2vw, 28px); }
+.section { padding-block: clamp(40px, 7vw, 72px); }
+
+/* --- Header: brand + CTA + hamburger must always fit --- */
+.nav { gap: clamp(8px, 2vw, 24px); }
+.brand { min-width: 0; flex: 0 1 auto; white-space: nowrap; }
+.nav-actions { gap: clamp(8px, 1.5vw, 12px); flex: 0 0 auto; }
+.nav-links.nav-links-open { padding-inline: clamp(16px, 4vw, 24px); max-height: calc(100dvh - var(--header-height)); overflow-y: auto; }
+
+@media (max-width: 560px) {
+  :root { --header-height: 64px; }
+  .nav-actions .btn { padding: 9px 16px; font-size: 0.85rem; }
+  .nav-toggle { width: 38px; height: 38px; }
+  .brand { font-size: 1rem; gap: 8px; }
+}
+@media (max-width: 380px) {
+  .brand-text { display: none; }              /* logo mark only on tiny phones */
+  .nav-actions .btn { padding: 9px 14px; }
+}
+
+/* --- Hero / landing --- */
+.hero { padding: clamp(32px, 6vw, 64px) clamp(20px, 5vw, 48px); }
+.hero-meta { gap: clamp(14px, 3vw, 28px); }
+.feature-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
+.qr-strip { padding: clamp(16px, 3vw, 24px); gap: clamp(14px, 3vw, 24px); }
+
+/* --- Register / ticket / stub cards: fluid width, comfortable on every device --- */
+.register-page, .ticket-page { padding-block: clamp(24px, 6vw, 56px) clamp(40px, 8vw, 72px); }
+.register-card { width: 100%; max-width: min(480px, 100%); padding: clamp(22px, 5vw, 36px) clamp(18px, 5vw, 32px); }
+.ticket-card, .stub-card { width: 100%; max-width: min(460px, 100%); }
+.ticket-id-value { font-size: clamp(0.95rem, 4.2vw, 1.15rem); word-break: break-all; }
+.qr-render { width: clamp(120px, 40vw, 160px); height: clamp(120px, 40vw, 160px); }
+.qr-render canvas, .qr-render img { width: 100% !important; height: 100% !important; }
+
+/* Inputs: >=16px on phones stops iOS auto-zoom, and never wider than the card */
+.field input, .field select, .field textarea { max-width: 100%; font-size: max(16px, 1rem); }
+
+/* --- Gate control / admin console --- */
+.console-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(12px, 2.2vw, 18px); }
+.stats-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(8px, 1.6vw, 14px); }
+.stat { padding: clamp(12px, 2.4vw, 18px) clamp(10px, 2.2vw, 20px); }
+.stat dd { font-size: clamp(1.6rem, 6vw, 2.4rem); }
+.stat dt { font-size: clamp(0.7rem, 2.6vw, 0.85rem); flex-wrap: wrap; }
+
+/* Camera box: square on desktop, never taller than the screen on phones/landscape */
+.viewport { width: 100%; max-height: min(72vh, 560px); max-height: min(72dvh, 560px); }
+.manual { gap: 10px; }
+.manual .input-wrap { flex: 1 1 0; }
+.manual input { min-width: 0; }
+.result { min-height: clamp(220px, 38dvh, 340px); }
+.recent li { flex-wrap: nowrap; }
+.recent li time { flex: none; }
+
+@media (max-width: 860px) {
+  .console-grid { grid-template-columns: minmax(0, 1fr); }
+  .viewport { max-height: min(60vh, 460px); max-height: min(60dvh, 460px); margin-inline: auto; }
+}
+@media (max-width: 560px) {
+  .manual { flex-direction: column; }
+  .manual .btn { width: 100%; }
+}
+
+/* Phone in landscape (short + wide): put camera and result side by side again */
+@media (max-height: 520px) and (orientation: landscape) {
+  .console-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .viewport { max-height: 62vh; }
+  .hero { padding-block: 28px; }
+  .stub-page { min-height: auto; }
+}
+
+/* --- Large desktop / ultrawide: use the space instead of a tiny centred column --- */
+@media (min-width: 1440px) {
+  :root { --container-width: 1280px; --header-height: 84px; }
+  .admin-page { max-width: min(1180px, 100%); }
+}
+@media (min-width: 1920px) {
+  :root { --container-width: 1480px; }
+  .admin-page { max-width: min(1320px, 100%); }
+}
+
+/* --- Old / tiny devices (<= 340px) --- */
+@media (max-width: 340px) {
+  .btn { padding-inline: 14px; }
+  .hero-title { font-size: 1.8rem; }
+  .stat dt svg { display: none; }
+}
+
+/* Manual ticket-ID box was rendering as a default white input */
+.manual input {
+  width: 100%;
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px 12px 42px;
+  color: var(--text-primary);
+  font-size: max(16px, 1rem);
+}
+.manual input::placeholder { color: var(--text-muted); text-transform: none; }
+.manual input:focus { outline: none; border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(78,107,255,.18); }
+
+/* Modern browsers: make sure the hidden attribute always wins */
+[hidden] { display: none !important; }
+
+/* Google-Pay-style success tick */
+#pay-tick { position: fixed; inset: 0; z-index: 999; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; background: #070a1e; opacity: 0; pointer-events: none; transition: opacity .3s; }
+#pay-tick.show { opacity: 1; pointer-events: auto; }
+#pay-tick .tick-ring { width: 120px; height: 120px; border-radius: 50%; background: #22c55e; display: grid; place-items: center; transform: scale(0); }
+#pay-tick.show .tick-ring { animation: tickPop .5s cubic-bezier(.2,1.4,.4,1) forwards, tickRipple 1s .3s ease-out; }
+#pay-tick path { stroke-dasharray: 30; stroke-dashoffset: 30; }
+#pay-tick.show path { animation: tickDraw .35s .35s ease forwards; }
+#pay-tick p { margin: 0; font-weight: 600; color: var(--text-primary); opacity: 0; }
+#pay-tick.show p { animation: tickFade .3s .7s forwards; }
+@keyframes tickPop { to { transform: scale(1); } }
+@keyframes tickDraw { to { stroke-dashoffset: 0; } }
+@keyframes tickFade { to { opacity: 1; } }
+@keyframes tickRipple { from { box-shadow: 0 0 0 0 rgba(34,197,94,.5); } to { box-shadow: 0 0 0 60px rgba(34,197,94,0); } }
+</style>
+
+</head>
+<body class="page-body">
+
+  <div id="app-header"></div>
+
+  <main>
+    <div class="page" data-page="index">
+      <div class="container">
+
+      <!-- Hero -->
+      <section class="hero">
+        <div class="hero-content">
+          <span class="eyebrow">LAN gaming event · BIT Wardha</span>
+          <h1 class="hero-title">LAN ARENA <span class="accent">2026</span></h1>
+          <h2>Plug in. Squad up. Level up.</h2>
+          <p class="hero-lede">
+            Bring your squad to Bajaj Institute of Technology, Wardha for a LAN
+            gaming event. Register once, get a digital pass, and scan in at the gate.
+          </p>
+
+          <div class="hero-meta">
+            <div class="hero-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+              Date &amp; time to be announced
+            </div>
+            <div class="hero-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>
+              Bajaj Institute of Technology, Wardha
+            </div>
+          </div>
+
+          <div style="margin-top: 28px; display:flex; gap: 14px; flex-wrap: wrap;">
+            <a href="#register" class="btn btn-primary">
+              Get Your Ticket
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="#about" class="btn btn-secondary">Learn more</a>
+          </div>
+
+          <div class="hero-icons" aria-hidden="true">
+            <span class="game-ico" title="Headset"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z"/><path d="M21 16v2a4 4 0 0 1-4 4h-5"/></svg></span>
+            <span class="game-ico" title="Keyboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 8h.01M12 12h.01M14 8h.01M16 12h.01M18 8h.01M6 8h.01M7 16h10M8 12h.01"/><rect width="20" height="16" x="2" y="4" rx="2"/></svg></span>
+            <span class="game-ico" title="Mouse"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="7"/><path d="M12 6v4"/></svg></span>
+            <span class="game-ico" title="Trophy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></span>
+            <span class="game-ico" title="Swords"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" x2="19" y1="19" y2="13"/><line x1="16" x2="20" y1="16" y2="20"/><line x1="19" x2="21" y1="21" y2="19"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/><line x1="5" x2="9" y1="14" y2="18"/><line x1="7" x2="4" y1="17" y2="20"/><line x1="3" x2="5" y1="19" y2="21"/></svg></span>
+            <span class="game-ico" title="Crosshair"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="22" x2="18" y1="12" y2="12"/><line x1="6" x2="2" y1="12" y2="12"/><line x1="12" x2="12" y1="6" y2="2"/><line x1="12" x2="12" y1="22" y2="18"/></svg></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- QR strip -->
+      <section class="card qr-strip">
+        <div class="qr-box" aria-hidden="true">
+          <svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#fff"/><g fill="#0a0e27"><rect x="8" y="8" width="24" height="24"/><rect x="68" y="8" width="24" height="24"/><rect x="8" y="68" width="24" height="24"/><rect x="16" y="16" width="8" height="8" fill="#fff"/><rect x="76" y="16" width="8" height="8" fill="#fff"/><rect x="16" y="76" width="8" height="8" fill="#fff"/><rect x="40" y="8" width="6" height="6"/><rect x="52" y="8" width="6" height="6"/><rect x="40" y="20" width="6" height="6"/><rect x="40" y="40" width="6" height="6"/><rect x="52" y="40" width="6" height="6"/><rect x="64" y="40" width="6" height="6"/><rect x="76" y="40" width="6" height="6"/><rect x="40" y="52" width="6" height="6"/><rect x="52" y="64" width="6" height="6"/><rect x="40" y="76" width="6" height="6"/><rect x="52" y="88" width="6" height="6"/><rect x="64" y="76" width="6" height="6"/><rect x="76" y="88" width="6" height="6"/><rect x="88" y="52" width="6" height="6"/><rect x="88" y="76" width="6" height="6"/></g></svg>
+        </div>
+        <div class="qr-copy">
+          <h3>Scan the QR code to register</h3>
+          <p class="text-secondary" style="margin-bottom:0;">Get your free digital ticket in just a few steps.</p>
+          <p class="field-hint">Quick · Easy · Secure</p>
+        </div>
+      </section>
+
+      <!-- Feature highlights -->
+      <section id="about" class="section">
+        <h2 style="margin-bottom: 28px;">Why EventPass</h2>
+        <div class="feature-grid">
+          <div class="card feature-card">
+            <div class="icon-tile">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="11" y2="11"/><line x1="8" x2="8" y1="9" y2="13"/><line x1="15" x2="15.01" y1="12" y2="12"/><line x1="18" x2="18.01" y1="10" y2="10"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/></svg>
+            </div>
+            <h3>One tap to register</h3>
+            <p>A short form gets you a confirmed spot — no printouts, no queues.</p>
+          </div>
+          <div class="card feature-card">
+            <div class="icon-tile">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><path d="M14 14h3v3h-3zM20 14v3M17 20h3"/></svg>
+            </div>
+            <h3>Digital ticket, always with you</h3>
+            <p>Your QR ticket lives in your inbox and on your phone — download or save it once.</p>
+          </div>
+          <div class="card feature-card">
+            <div class="icon-tile">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+            </div>
+            <h3>Fast entry verification</h3>
+            <p>Organizers scan your code at the gate for instant, reliable check-in.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+    </div>
+    <div class="page" data-page="register" hidden>
+      <div class="container register-page">
+        <div class="register-card">
+          <div class="register-brand">
+            <span class="brand-mark">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="11" y2="11"/><line x1="8" x2="8" y1="9" y2="13"/><line x1="15" x2="15.01" y1="12" y2="12"/><line x1="18" x2="18.01" y1="10" y2="10"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/></svg>
+            </span>
+            EventPass
+          </div>
+
+          <h2 class="register-title">LAN ARENA 2026</h2>
+          <p class="register-subtitle">Register to get your digital ticket</p>
+
+          <form id="register-form" novalidate>
+            <div class="field">
+              <label for="fullName">Full Name <span class="required">*</span></label>
+              <div class="input-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21a8 8 0 1 0-16 0"/><circle cx="12" cy="7" r="4"/></svg>
+                <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" autocomplete="name" required />
+              </div>
+              <p class="field-error" data-error-for="fullName">Please enter your full name.</p>
+            </div>
+
+            <div class="field">
+              <label for="email">Email Address <span class="required">*</span></label>
+              <div class="input-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
+                <input type="email" id="email" name="email" placeholder="Enter your email address" autocomplete="email" required />
+              </div>
+              <p class="field-error" data-error-for="email">Please enter a valid email address.</p>
+            </div>
+
+            <div class="field">
+              <label for="phone">Phone Number <span class="required">*</span></label>
+              <div class="input-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .7 2.9a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.4 1.9.6 2.9.7a2 2 0 0 1 1.7 2Z"/></svg>
+                <input type="tel" id="phone" name="phone" placeholder="Enter your mobile number" autocomplete="tel" pattern="[0-9+\-\s]{7,15}" required />
+              </div>
+              <p class="field-error" data-error-for="phone">Please enter a valid phone number.</p>
+            </div>
+
+            <div class="field">
+              <label for="college">College / School <span class="required">*</span></label>
+              <div class="input-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M4 21V9l8-5 8 5v12M9 21v-6h6v6"/></svg>
+                <input type="text" id="college" name="college" placeholder="Enter your college or school name" autocomplete="organization" required />
+              </div>
+              <p class="field-error" data-error-for="college">Please enter your college or school.</p>
+            </div>
+
+            <div class="field">
+              <label for="course">Course / Class <span class="required">*</span></label>
+              <div class="input-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.1 2.7 2 6 2s6-.9 6-2v-5"/></svg>
+                <select id="course" name="course" required>
+                  <option value="" disabled selected>Select your course or class</option>
+                  <option>B.Tech - Computer Engineering</option>
+                  <option>B.Tech - Computer Science</option>
+                  <option>B.Tech - Information Technology</option>
+                  <option>B.Tech - Electronics</option>
+                  <option>B.Tech - Mechanical</option>
+                  <option>BCA</option>
+                  <option>MCA</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <p class="field-error" data-error-for="course">Please select your course or class.</p>
+            </div>
+
+            <div class="field field-checkbox">
+              <label class="checkbox-row" for="terms">
+                <input type="checkbox" id="terms" name="terms" required />
+                <span>I agree to the <a href="#" class="link-accent">Terms &amp; Conditions</a> and <a href="#" class="link-accent">Privacy Policy</a></span>
+              </label>
+              <p class="field-error" data-error-for="terms">You must agree before registering.</p>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9a3 3 0 1 0 0 6v2a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-2a3 3 0 1 1 0-6V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v2Z"/></svg>
+              Register &amp; Get Ticket
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="page" data-page="ticket" hidden>
+      <div class="container ticket-page">
+        <div class="ticket-card" id="no-ticket" hidden>
+          <h2 class="ticket-heading">No ticket yet</h2>
+          <p class="ticket-sub">You haven't registered yet.<br />Go to the Register page to get your ticket.</p>
+          <a href="#register" class="btn btn-primary btn-block">Go to Register Ticket page</a>
+        </div>
+        <div class="ticket-card" id="ticket-card">
+          <div class="success-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>
+          </div>
+
+          <h2 class="ticket-heading">Registration Successful!</h2>
+          <p class="ticket-sub">Your digital ticket has been generated.<br />Check your email or download it below.</p>
+
+          <div class="ticket-id-box">
+            <div>
+              <span class="ticket-id-label">Ticket ID</span>
+              <div class="ticket-id-value" id="ticket-id-value">LAN26-000000</div>
+            </div>
+            <button type="button" class="icon-btn" id="copy-ticket-id" aria-label="Copy ticket ID">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>
+            </button>
+          </div>
+
+          <div class="ticket-qr-wrap">
+            <div id="qrcode" class="qr-render"></div>
+            <span class="text-muted" style="font-size:0.8rem;">Scan at entry</span>
+          </div>
+
+          <button type="button" class="btn btn-primary btn-block" id="download-pdf-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+            Download PDF Ticket
+          </button>
+
+          <button type="button" class="btn btn-secondary btn-block" id="share-ticket-btn" style="margin-top:12px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-3.9M8.6 13.5l6.8 3.9"/></svg>
+            Share Ticket
+          </button>
+
+          <a href="#" class="btn btn-secondary btn-block" id="email-ticket-btn" style="margin-top:12px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
+            Get Ticket via Email
+          </a>
+
+          <div class="info-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <div>
+              <strong>Keep your ticket safe!</strong>
+              <p>You'll need to show the QR code at the event entry.</p>
+            </div>
+          </div>
+
+          <a href="#index" class="back-home-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 12 9-9 9 9"/><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"/></svg>
+            Back to Home
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="page" data-page="verify" hidden>
+      <div class="container admin-page">
+
+        <section class="card card-elevated admin-login" id="admin-login" hidden>
+          <div class="icon-tile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+          </div>
+          <span class="badge badge-info">Organizers only</span>
+          <h2 style="margin-top:14px;">Admin console</h2>
+          <p>Enter the admin password to scan tickets and check players in.</p>
+          <form id="admin-login-form" novalidate>
+            <div class="field">
+              <label for="admin-pass">Admin password</label>
+              <div class="input-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <input type="password" id="admin-pass" placeholder="Enter password" autocomplete="current-password" required />
+                <button type="button" class="peek" id="admin-peek" aria-label="Show password" aria-pressed="false">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="admin-err" id="admin-err" role="alert"></div>
+            <button type="submit" class="btn btn-primary btn-block" id="admin-login-btn">Unlock console</button>
+          </form>
+        </section>
+
+        <section id="admin-console" hidden>
+          <div class="console-head">
+            <h2>Gate control <span class="live-dot"><i></i>Live</span></h2>
+            <button type="button" class="btn btn-secondary btn-sm" id="admin-logout">Lock console</button>
+          </div>
+
+          <dl class="stats-grid">
+            <div class="card stat"><dt><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Registered</dt><dd id="st-total">0</dd></div>
+            <div class="card stat in"><dt><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Checked in</dt><dd id="st-in">0</dd></div>
+            <div class="card stat"><dt><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Yet to arrive</dt><dd id="st-left">0</dd></div>
+          </dl>
+          <div class="progress" aria-hidden="true"><i id="st-bar"></i></div>
+
+          <div class="console-grid">
+            <div class="card scanner">
+              <div class="viewport" id="viewport">
+                <video id="scan-video" playsinline muted></video>
+                <div class="viewport-msg" id="scan-msg">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+                  <span id="scan-msg-text">Camera is off</span>
+                </div>
+                <div class="reticle"><i></i><i></i><i></i><i></i><span class="laser"></span></div>
+              </div>
+              <div class="scan-actions">
+                <button type="button" class="btn btn-primary btn-block" id="scan-toggle"><span>Start camera</span></button>
+              </div>
+              <form class="manual" id="manual-form" novalidate>
+                <div class="input-wrap">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9a3 3 0 1 0 0 6v2a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-2a3 3 0 1 1 0-6V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v2Z"/><path d="M13 5v2M13 11v2M13 17v2"/></svg>
+                  <input type="text" id="manual-id" placeholder="LAN26-123456" autocomplete="off" autocapitalize="characters" spellcheck="false" />
+                </div>
+                <button type="submit" class="btn btn-secondary">Look up</button>
+              </form>
+            </div>
+
+            <div class="card result" id="result"></div>
+          </div>
+
+          <div class="card recent">
+            <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Recent check-ins</h3>
+            <ul id="recent-list"></ul>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <div id="app-footer"></div>
+
+  <div id="pay-tick" aria-hidden="true">
+    <div class="tick-ring"><svg viewBox="0 0 24 24" width="64" height="64" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg></div>
+    <p>Ticket generated</p>
+  </div>
+
+  <script>
+    // ---------------------------------------------------------------
+    // Event details — edit here (single place)
+    // ---------------------------------------------------------------
+    const EVENT = {
+      name: "LAN ARENA 2026",
+      tagline: "Plug in. Squad up. Level up.",
+      date: "Date & time to be announced",   // e.g. "15 March 2026 · 10:00 AM – 6:00 PM"
+      venue: "Bajaj Institute of Technology, Wardha",
+      college: "Bajaj Institute of Technology, Wardha",
+    };
+  </script>
+
+  <script>
+/**
+ * EventPass — shared UI components
+ * Vanilla JS, no build step. Each page includes this file and calls
+ * EventPass.mountHeader() / mountFooter() into placeholder elements,
+ * so nav/footer markup lives in exactly one place.
+ */
+
+const EventPass = (() => {
+  const NAV_LINKS = [
+    { label: "Home", href: "#index" },
+    { label: "Register", href: "#register" },
+    { label: "My Ticket", href: "#ticket" },
+    { label: "Verify Entry", href: "#verify" },
+  ];
+
+  function iconTicket() {
+    return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="11" y2="11"/><line x1="8" x2="8" y1="9" y2="13"/><line x1="15" x2="15.01" y1="12" y2="12"/><line x1="18" x2="18.01" y1="10" y2="10"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/></svg>`;
+  }
+
+  function iconMenu() {
+    return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>`;
+  }
+
+  function iconClose() {
+    return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>`;
+  }
+
+  /**
+   * Render the site header/nav into #app-header.
+   * @param {string} activePage - href of the current page, for the active link style.
+   */
+  function mountHeader(activePage) {
+    const el = document.getElementById("app-header");
+    if (!el) return;
+
+    const links = NAV_LINKS.map(
+      (link) =>
+        `<a href="${link.href}" class="${link.href === "#" + activePage ? "is-active" : ""}">${link.label}</a>`
+    ).join("");
+
+    el.innerHTML = `
+      <header class="site-header">
+        <div class="container nav">
+          <a href="#index" class="brand">
+            <span class="brand-mark">${iconTicket()}</span>
+            <span class="brand-text">EventPass</span>
+          </a>
+          <nav class="nav-links" id="nav-links">${links}</nav>
+          <div class="nav-actions">
+            <a href="#register" class="btn btn-primary">Get Your Ticket</a>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+              ${iconMenu()}
+            </button>
+          </div>
+        </div>
+      </header>
+    `;
+
+    const toggle = document.getElementById("nav-toggle");
+    const navLinks = document.getElementById("nav-links");
+    toggle.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("nav-links-open");
+      toggle.setAttribute("aria-expanded", String(isOpen));
+      toggle.innerHTML = isOpen ? iconClose() : iconMenu();
+    });
+  }
+
+  /** Render the site footer into #app-footer. */
+  function mountFooter() {
+    const el = document.getElementById("app-footer");
+    if (!el) return;
+
+    el.innerHTML = `
+      <footer class="site-footer">
+        <div class="container footer-row">
+          <span class="text-muted">© ${new Date().getFullYear()} EventPass · ${EVENT.name} · ${EVENT.college}</span>
+          <span class="footer-dev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg>Developed by <b>Piyush Deshkar</b></span>
+        </div>
+      </footer>
+    `;
+  }
+
+  return { mountHeader, mountFooter, NAV_LINKS };
+})();
+
+  </script>
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const PAGES = ["index", "register", "ticket", "verify"];
+  function showPage() {
+    const h = (window.location.hash || "").slice(1);
+    const route = PAGES.includes(h) ? h : "index";
+    document.querySelectorAll(".page").forEach((el) => {
+      el.hidden = el.dataset.page !== route;
+    });
+    EventPass.mountHeader(route);
+    if (route === "verify") Admin.onShow(); else Admin.stop();
+    if (h && !PAGES.includes(h)) {
+      const target = document.getElementById(h);
+      if (target) { target.scrollIntoView({ behavior: "smooth", block: "start" }); return; }
+    }
+    window.scrollTo(0, 0);
+  }
+  Admin.init();
+  window.addEventListener("hashchange", showPage);
+  EventPass.mountFooter();
+  showPage();
+});
+
+  </script>
+  <script>
+    // ---------------------------------------------------------------
+    // Registration goes through the /api/register serverless function
+    // (Vercel). Supabase details stay on the server side.
+    // ---------------------------------------------------------------
+    const STORAGE_KEY = "eventpass_registration";
+
+    document.addEventListener("submit", async (e) => {
+      if (e.target.id !== "register-form") return;
+      e.preventDefault();
+
+      const form = e.target;
+      let isValid = true;
+
+      form.querySelectorAll(".field").forEach((field) => {
+        const control = field.querySelector("input, select");
+        if (!control) return;
+        const ok = control.checkValidity();
+        field.classList.toggle("has-error", !ok);
+        if (!ok) isValid = false;
+      });
+
+      if (!isValid) {
+        form.querySelector(".field.has-error input, .field.has-error select")?.focus();
+        return;
+      }
+
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalLabel = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Registering…";
+
+      const data = Object.fromEntries(new FormData(form).entries());
+
+      let t = null;
+      let errMsg = "Registration failed. Please try again.";
+      try {
+        const res = await fetch("/api/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            fullName: data.fullName,
+            email: data.email,
+            phone: data.phone,
+            college: data.college,
+            course: data.course,
+          }),
+        });
+        const json = await res.json().catch(() => ({}));
+        if (res.ok && json.ticket_id) t = json;
+        else if (json.error) errMsg = json.error;
+      } catch (err) {
+        console.error("Registration failed:", err);
+      }
+
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalLabel;
+
+      if (!t) {
+        alert(errMsg);
+        return;
+      }
+
+      const saved = JSON.stringify({
+        fullName: data.fullName,
+        email: data.email,
+        phone: data.phone,
+        college: data.college,
+        course: data.course,
+        ticketId: t.ticket_id,
+        event: EVENT.name,
+        venue: EVENT.venue,
+        date: EVENT.date,
+      });
+      sessionStorage.setItem(STORAGE_KEY, saved);
+      try { localStorage.setItem(STORAGE_KEY, saved); } catch {}
+      window.location.hash = "#ticket";
+      showTick();
+    });
+
+    // Google-Pay-style success tick
+    function showTick() {
+      const t = document.getElementById("pay-tick");
+      t.classList.add("show");
+      if (navigator.vibrate) navigator.vibrate(60);
+      setTimeout(() => t.classList.remove("show"), 1800);
+    }
+
+    document.addEventListener("input", (e) => {
+      const field = e.target.closest(".field");
+      if (field && field.classList.contains("has-error") && e.target.checkValidity()) {
+        field.classList.remove("has-error");
+      }
+    });
+
+    // ---------------------------------------------------------------
+    // Ticket page: reads the stored registration, renders a unique
+    // QR code per user, and wires copy / PDF download / email / share.
+    // ---------------------------------------------------------------
+    function getRegistration() {
+      let raw = sessionStorage.getItem(STORAGE_KEY);
+      if (!raw) { try { raw = localStorage.getItem(STORAGE_KEY); } catch {} }
+      if (raw) return JSON.parse(raw);
+
+      return null; // not registered yet
+    }
+
+    function renderTicket() {
+      const el = document.getElementById("ticket-id-value");
+      if (!el) return; // not on the ticket page
+
+      const reg = getRegistration();
+      document.getElementById("ticket-card").hidden = !reg;
+      document.getElementById("no-ticket").hidden = !!reg;
+      if (!reg) return;
+      el.textContent = reg.ticketId;
+
+      // Unique QR payload per attendee: ticket ID + name + event,
+      // so each generated code is distinct and scannable at entry.
+      const qrPayload = reg.ticketId;
+
+      const qrContainer = document.getElementById("qrcode");
+      qrContainer.innerHTML = "";
+      new QRCode(qrContainer, {
+        text: qrPayload,
+        width: 112,
+        height: 112,
+        colorDark: "#0a0e27",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.M,
+      });
+
+      // Copy ticket ID
+      const copyBtn = document.getElementById("copy-ticket-id");
+      copyBtn.onclick = async () => {
+        try {
+          await navigator.clipboard.writeText(reg.ticketId);
+          copyBtn.classList.add("is-copied");
+          setTimeout(() => copyBtn.classList.remove("is-copied"), 1500);
+        } catch {
+          /* clipboard unavailable — silently ignore */
+        }
+      };
+
+      // Get Ticket via Email — opens the user's mail client with the
+      // ticket details prefilled (no backend/email server yet).
+      const emailBtn = document.getElementById("email-ticket-btn");
+      emailBtn.onclick = (e) => {
+        e.preventDefault();
+        const subject = encodeURIComponent(`Your EventPass ticket — ${reg.ticketId}`);
+        const body = encodeURIComponent(
+          `Hi ${reg.fullName},\n\nYour ticket for ${reg.event} is confirmed.\n\n` +
+          `Ticket ID: ${reg.ticketId}\nDate: ${reg.date}\nVenue: ${reg.venue}\n\n` +
+          `Show the QR code on this ticket at entry.\n\n— EventPass`
+        );
+        window.location.href = `mailto:${reg.email}?subject=${subject}&body=${body}`;
+      };
+
+      // Builds the one-page ticket PDF (attendee details + the
+      // unique on-screen QR code) and returns the jsPDF instance.
+      // Shared by both the Download and Share buttons.
+      function buildTicketPdf() {
+        if (!window.jspdf || !window.jspdf.jsPDF) {
+          throw new Error("jsPDF failed to load");
+        }
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF({ unit: "pt", format: [360, 560] });
+
+        // Header band
+        pdf.setFillColor(10, 14, 39);
+        pdf.rect(0, 0, 360, 130, "F");
+        pdf.setTextColor(255, 255, 255);
+        pdf.setFont("helvetica", "bold");
+        pdf.setFontSize(20);
+        pdf.text("EventPass", 28, 46);
+        pdf.setFontSize(22);
+        pdf.text(reg.event, 28, 78);
+        pdf.setFont("helvetica", "normal");
+        pdf.setFontSize(11);
+        pdf.text(EVENT.tagline, 28, 98);
+
+        // Body
+        pdf.setTextColor(20, 22, 50);
+        pdf.setFont("helvetica", "bold");
+        pdf.setFontSize(12);
+        pdf.text("Attendee Details", 28, 156);
+        pdf.setFont("helvetica", "normal");
+        pdf.setFontSize(11);
+        const lines = [
+          `Name: ${reg.fullName}`,
+          `Email: ${reg.email}`,
+          `Phone: ${reg.phone}`,
+          `College/School: ${reg.college}`,
+          `Course/Class: ${reg.course}`,
+          "",
+          `Date: ${reg.date}`,
+          `Venue: ${reg.venue}`,
+        ];
+        lines.forEach((line, i) => pdf.text(line, 28, 178 + i * 18));
+
+        // QR code image, pulled from the on-page canvas
+        const qrCanvas = document.querySelector("#qrcode canvas");
+        if (qrCanvas) {
+          const qrData = qrCanvas.toDataURL("image/png");
+          pdf.setDrawColor(230, 230, 240);
+          pdf.roundedRect(210, 340, 122, 150, 8, 8);
+          pdf.addImage(qrData, "PNG", 224, 352, 94, 94);
+          pdf.setFont("helvetica", "bold");
+          pdf.setFontSize(9);
+          pdf.text(reg.ticketId, 271, 464, { align: "center" });
+        }
+
+        pdf.setFont("helvetica", "bold");
+        pdf.setFontSize(13);
+        pdf.text("Ticket ID", 28, 360);
+        pdf.setFontSize(16);
+        pdf.text(reg.ticketId, 28, 382);
+
+        pdf.setDrawColor(220, 220, 235);
+        pdf.line(28, 500, 332, 500);
+        pdf.setFont("helvetica", "normal");
+        pdf.setFontSize(9);
+        pdf.setTextColor(110, 116, 150);
+        pdf.text("Keep this ticket safe — show the QR code at entry.", 28, 520);
+        pdf.text("Developed by Piyush Deshkar", 28, 538);
+
+        return pdf;
+      }
+
+      // Download PDF Ticket — ONLY downloads the file. No share
+      // sheet here, so it behaves the same on desktop and Android
+      // Chrome: it always saves the PDF straight to disk.
+      const downloadBtn = document.getElementById("download-pdf-btn");
+      downloadBtn.onclick = () => {
+        const originalLabel = downloadBtn.innerHTML;
+        downloadBtn.disabled = true;
+        downloadBtn.textContent = "Preparing ticket…";
+
+        try {
+          const pdf = buildTicketPdf();
+          pdf.save(`EventPass-${reg.ticketId}.pdf`);
+        } catch (err) {
+          console.error("PDF download failed:", err);
+          alert("Couldn't generate the PDF. Please try again.");
+        } finally {
+          downloadBtn.disabled = false;
+          downloadBtn.innerHTML = originalLabel;
+        }
+      };
+
+      // Share Ticket — a separate action that opens the native share
+      // sheet (WhatsApp, Messages, etc.) when supported, and falls
+      // back to a plain download if the device can't share files.
+      const shareBtn = document.getElementById("share-ticket-btn");
+      shareBtn.onclick = async () => {
+        const originalLabel = shareBtn.innerHTML;
+        shareBtn.disabled = true;
+        shareBtn.textContent = "Preparing…";
+
+        try {
+          const pdf = buildTicketPdf();
+          const fileName = `EventPass-${reg.ticketId}.pdf`;
+          const blob = pdf.output("blob");
+          const file = new File([blob], fileName, { type: "application/pdf" });
+
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            await navigator.share({
+              files: [file],
+              title: "My EventPass Ticket",
+              text: `${reg.event} — ${reg.ticketId}`,
+            });
+          } else {
+            pdf.save(fileName);
+          }
+        } catch (err) {
+          if (err?.name !== "AbortError") {
+            console.error("Share failed:", err);
+          }
+        } finally {
+          shareBtn.disabled = false;
+          shareBtn.innerHTML = originalLabel;
+        }
+      };
+    }
+
+    window.addEventListener("hashchange", () => {
+      if (window.location.hash === "#ticket") renderTicket();
+    });
+    document.addEventListener("DOMContentLoaded", () => {
+      if ((window.location.hash || "#index") === "#ticket") renderTicket();
+    });
+  </script>
+  <script>
+    // ---------------------------------------------------------------
+    // Admin console: password login, live stats, camera QR scanner,
+    // look up → admit → undo. Everything goes through POST /api/admin.
+    // ---------------------------------------------------------------
+    const Admin = (() => {
+      const $ = (s, r = document) => r.querySelector(s);
+      const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+      const P = {
+        check: '<path d="m5 13 4 4L19 7"/>',
+        x: '<path d="M18 6 6 18M6 6l12 12"/>',
+        alert: '<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4M12 17h.01"/>',
+        scan: '<path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 12h10"/>',
+        undo: '<path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/>',
+      };
+      const ico = (n) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n]}</svg>`;
+      const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      const PW_KEY = "lanarena_admin_pw";
+      let pw = "";
+      try { pw = sessionStorage.getItem(PW_KEY) || ""; } catch {}
+
+      let stream = null, rafId = 0, detector = null, camOn = false, paused = false, detecting = false;
+      let lastCode = "", lastAt = 0, lastTick = 0, canvas = null, ctx = null, statsTimer = 0, current = null, audioCtx = null;
+
+      async function api(body) {
+        try {
+          const res = await fetch("/api/admin", {
+            method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(Object.assign({ password: pw }, body)),
+          });
+          const json = await res.json().catch(() => ({}));
+          return { status: res.status, json };
+        } catch {
+          return { status: 0, json: { error: "Network error. Check your connection." } };
+        }
+      }
+
+      function showLogin(msg) {
+        stopCam(); clearInterval(statsTimer);
+        pw = ""; try { sessionStorage.removeItem(PW_KEY); } catch {}
+        $("#admin-console").hidden = true;
+        $("#admin-login").hidden = false;
+        const err = $("#admin-err");
+        err.classList.toggle("show", !!msg); err.textContent = msg || "";
+      }
+
+      function showConsole(stats) {
+        $("#admin-login").hidden = true;
+        $("#admin-console").hidden = false;
+        applyStats(stats);
+        resetResult();
+        clearInterval(statsTimer);
+        statsTimer = setInterval(refreshStats, 20000);
+      }
+
+      function countTo(el, to) {
+        const from = parseInt(el.textContent, 10) || 0;
+        if (from === to || reduceMotion) { el.textContent = to; return; }
+        const t0 = performance.now(), dur = 600;
+        (function step(now) {
+          const p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(from + (to - from) * e);
+          if (p < 1) requestAnimationFrame(step);
+        })(t0);
+      }
+
+      const fmtTime = (iso) => { try { return new Date(iso).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }); } catch { return ""; } };
+
+      function applyStats(s) {
+        if (!s) return;
+        const total = s.total || 0, inn = s.checked_in || 0;
+        countTo($("#st-total"), total); countTo($("#st-in"), inn); countTo($("#st-left"), Math.max(0, total - inn));
+        $("#st-bar").style.width = (total ? Math.round((inn / total) * 100) : 0) + "%";
+        const rows = Array.isArray(s.recent) ? s.recent : [];
+        $("#recent-list").innerHTML = rows.length
+          ? rows.map((r) => `<li><div><b>${esc(r.full_name)}</b><small>${esc(r.ticket_id)} · ${esc(r.college)}</small></div><time>${esc(fmtTime(r.checked_in_at))}</time></li>`).join("")
+          : `<li class="none">No one has checked in yet.</li>`;
+      }
+
+      async function refreshStats() {
+        if (document.hidden) return;
+        const { status, json } = await api({ action: "stats" });
+        if (status === 401) return showLogin("Session expired. Enter the password again.");
+        if (status === 200) applyStats(json);
+      }
+
+      async function onShow() {
+        if (!pw) { showLogin(); return; }
+        $("#admin-login").hidden = true; $("#admin-console").hidden = true;
+        const { status, json } = await api({ action: "stats" });
+        if (status === 200) showConsole(json);
+        else showLogin(status === 401 ? "Session expired. Enter the password again." : (json.error || ""));
+      }
+
+      function resetResult() {
+        current = null; paused = false; lastCode = "";
+        $("#result").innerHTML = `
+          <div class="res-idle">
+            <div class="icon-tile">${ico("scan")}</div>
+            <h3>Waiting for a scan</h3>
+            <p>Point the camera at a player's QR code, or type the ticket ID below.</p>
+          </div>`;
+      }
+
+      function renderLoading() {
+        $("#result").innerHTML = `<div class="res-idle"><div class="icon-tile"><span class="spinner" style="border-color:rgba(108,92,231,.35);border-top-color:#6c5ce7"></span></div><h3>Checking ticket…</h3></div>`;
+      }
+
+      function renderResult(d) {
+        current = d;
+        let cls, icon, title, sub, actions;
+        if (!d.valid) {
+          cls = "bad"; icon = "x"; title = "Ticket not found"; sub = "No registration matches this code.";
+          actions = `<button class="btn btn-secondary" data-act="next">${ico("scan")}Scan next</button>`;
+          tone("bad");
+        } else if (!d.checked_in) {
+          cls = "ok"; icon = "check"; title = "Valid ticket"; sub = "Not checked in yet.";
+          actions = `<button class="btn btn-success" data-act="checkin">${ico("check")}Admit player</button>
+                     <button class="btn btn-secondary" data-act="next">${ico("scan")}Scan next</button>`;
+          tone("ok");
+        } else if (d.just_checked_in) {
+          cls = "ok"; icon = "check"; title = "Player admitted"; sub = `Checked in at ${fmtTime(d.checked_in_at)}.`;
+          actions = `<button class="btn btn-success" data-act="next">${ico("scan")}Scan next</button>
+                     <button class="btn btn-danger btn-sm" data-act="undo">${ico("undo")}Undo check-in</button>`;
+          tone("ok");
+        } else {
+          cls = "warn"; icon = "alert"; title = "Already checked in"; sub = `Entered at ${fmtTime(d.checked_in_at)}. Do not admit again.`;
+          actions = `<button class="btn btn-secondary" data-act="next">${ico("scan")}Scan next</button>
+                     <button class="btn btn-danger btn-sm" data-act="undo">${ico("undo")}Undo check-in</button>`;
+          tone("warn");
+        }
+        const who = d.valid ? `<div class="res-name">${esc(d.full_name)}</div><p class="res-meta">${esc(d.college)} · ${esc(d.course)}</p>` : "";
+        $("#result").innerHTML = `
+          <div class="res ${cls}">
+            <div class="res-head"><span class="res-badge">${ico(icon)}</span><div><div class="res-title">${title}</div><div class="res-sub">${sub}</div></div></div>
+            ${who}
+            <span class="res-id">${esc(d.ticket_id)}</span>
+            <div class="res-actions">${actions}</div>
+          </div>`;
+        if (navigator.vibrate) navigator.vibrate(d.valid && !d.checked_in ? 60 : [80, 60, 80]);
+      }
+
+      function renderError(msg) {
+        current = null;
+        $("#result").innerHTML = `
+          <div class="res bad">
+            <div class="res-head"><span class="res-badge">${ico("alert")}</span><div><div class="res-title">Something went wrong</div><div class="res-sub">${esc(msg)}</div></div></div>
+            <div class="res-actions"><button class="btn btn-secondary" data-act="next">${ico("scan")}Try again</button></div>
+          </div>`;
+      }
+
+      async function act(action, id) {
+        paused = true; renderLoading();
+        const { status, json } = await api({ action, ticket_id: id });
+        if (status === 401) return showLogin("Session expired. Enter the password again.");
+        if (status !== 200) return renderError(json.error || "Request failed. Try again.");
+        renderResult(json);
+        refreshStats();
+      }
+
+      // Plain ticket ID, or the JSON payload of older QR codes
+      function extractId(raw) {
+        let t = String(raw || "").trim();
+        try { const o = JSON.parse(t); if (o && typeof o === "object") t = o.ticketId || o.ticket_id || ""; } catch {}
+        t = String(t).toUpperCase();
+        const m = t.match(/[A-Z0-9]{2,10}-\d{6}/);
+        if (m) return m[0];
+        return /^[A-Z0-9-]{4,40}$/.test(t) ? t : "";
+      }
+
+      function tone(kind) {
+        try {
+          audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+          const seq = kind === "ok" ? [[880, .09], [1320, .12]] : kind === "warn" ? [[520, .12], [520, .12]] : [[180, .28]];
+          let t = audioCtx.currentTime;
+          seq.forEach(([f, d]) => {
+            const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+            o.type = kind === "bad" ? "sawtooth" : "sine"; o.frequency.value = f;
+            g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.18, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+            o.connect(g).connect(audioCtx.destination); o.start(t); o.stop(t + d + 0.02); t += d + 0.04;
+          });
+        } catch {}
+      }
+
+      function setMsg(text) { const el = $("#scan-msg-text"); if (el) el.textContent = text; }
+      function setToggle(on) { $("#scan-toggle span").textContent = on ? "Stop camera" : "Start camera"; }
+
+      async function startCam() {
+        if (camOn) return;
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { setMsg("This browser can't use the camera. Type the ticket ID instead."); return; }
+        try {
+          stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" }, width: { ideal: 1280 }, height: { ideal: 720 } }, audio: false });
+        } catch (e) {
+          setMsg(e && e.name === "NotAllowedError" ? "Camera access is blocked. Allow it in the browser and try again." : "Couldn't start the camera. Type the ticket ID instead.");
+          return;
+        }
+        const v = $("#scan-video");
+        v.srcObject = stream;
+        try { await v.play(); } catch {}
+        camOn = true; paused = !!current; setToggle(true);
+        $("#viewport").classList.add("live-cam");
+        detector = null;
+        if ("BarcodeDetector" in window) { try { detector = new BarcodeDetector({ formats: ["qr_code"] }); } catch { detector = null; } }
+        rafId = requestAnimationFrame(loop);
+      }
+
+      function stopCam() {
+        camOn = false; cancelAnimationFrame(rafId);
+        if (stream) { stream.getTracks().forEach((t) => t.stop()); stream = null; }
+        const v = $("#scan-video"); if (v) v.srcObject = null;
+        const vp = $("#viewport"); if (vp) vp.classList.remove("live-cam");
+        if ($("#scan-toggle")) { setToggle(false); setMsg("Camera is off"); }
+      }
+
+      async function loop(ts) {
+        if (!camOn) return;
+        rafId = requestAnimationFrame(loop);
+        if (paused || detecting || ts - lastTick < 160) return;
+        lastTick = ts;
+        const v = $("#scan-video");
+        if (!v || v.readyState < 2 || !v.videoWidth) return;
+        detecting = true;
+        let text = "";
+        try {
+          if (detector) {
+            const codes = await detector.detect(v);
+            if (codes.length) text = codes[0].rawValue;
+          } else if (window.jsQR) {
+            if (!canvas) canvas = document.createElement("canvas");
+            const s = Math.min(1, 640 / v.videoWidth);
+            canvas.width = Math.round(v.videoWidth * s); canvas.height = Math.round(v.videoHeight * s);
+            if (!ctx) ctx = canvas.getContext("2d", { willReadFrequently: true });
+            ctx.drawImage(v, 0, 0, canvas.width, canvas.height);
+            const img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const code = window.jsQR(img.data, img.width, img.height, { inversionAttempts: "dontInvert" });
+            if (code) text = code.data;
+          }
+        } catch {}
+        detecting = false;
+        if (text) onCode(text);
+      }
+
+      function onCode(text) {
+        const id = extractId(text);
+        if (!id) return;
+        const now = Date.now();
+        if (id === lastCode && now - lastAt < 3000) return;
+        lastCode = id; lastAt = now;
+        act("lookup", id);
+      }
+
+      function init() {
+        $("#admin-login-form").addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const input = $("#admin-pass"), btn = $("#admin-login-btn"), err = $("#admin-err");
+          if (!input.value) { err.textContent = "Enter the admin password."; err.classList.add("show"); return; }
+          const old = btn.innerHTML; btn.disabled = true; btn.innerHTML = `<span class="spinner"></span>Checking…`;
+          pw = input.value;
+          const { status, json } = await api({ action: "stats" });
+          btn.disabled = false; btn.innerHTML = old;
+          if (status === 200) {
+            try { sessionStorage.setItem(PW_KEY, pw); } catch {}
+            input.value = ""; showConsole(json);
+          } else {
+            const m = status === 401 ? "Wrong password. Try again." : (json.error || "Could not sign in. Try again.");
+            pw = ""; showLogin(m); input.focus();
+          }
+        });
+
+        $("#admin-peek").addEventListener("click", (e) => {
+          const b = e.currentTarget, i = $("#admin-pass"), show = i.type === "password";
+          i.type = show ? "text" : "password"; i.classList.toggle("pw", show);
+          b.setAttribute("aria-pressed", String(show));
+          b.setAttribute("aria-label", show ? "Hide password" : "Show password");
+        });
+
+        $("#admin-logout").addEventListener("click", () => showLogin());
+        $("#scan-toggle").addEventListener("click", () => (camOn ? stopCam() : startCam()));
+
+        $("#manual-form").addEventListener("submit", (e) => {
+          e.preventDefault();
+          const input = $("#manual-id"), id = extractId(input.value);
+          if (!id) { renderError("Enter a valid ticket ID, like LAN26-123456."); return; }
+          input.value = ""; lastCode = id; lastAt = Date.now();
+          act("lookup", id);
+        });
+
+        $("#result").addEventListener("click", (e) => {
+          const b = e.target.closest("[data-act]"); if (!b) return;
+          const a = b.dataset.act;
+          if (a === "next") return resetResult();
+          if (!current) return;
+          if (a === "undo" && !confirm(`Undo check-in for ${current.full_name}?`)) return;
+          act(a, current.ticket_id);
+        });
+
+        document.addEventListener("visibilitychange", () => { if (document.hidden) stopCam(); });
+      }
+
+      return { init, onShow, stop() { stopCam(); clearInterval(statsTimer); } };
+    })();
+  </script>
+</body>
+</html>
