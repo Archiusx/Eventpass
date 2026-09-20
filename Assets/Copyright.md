@@ -34,8 +34,8 @@ Fair dealing is a limited exception and does not replace the permission of the r
 
 ## Takedown / credit request
 
-If you are a rights holder and want an image removed or credited differently, contact us at **your-email@example.com** (edit this). We will remove or update it within 48 hours.
+If you are a rights holder and want an image removed or credited differently, contact us at **class11art@gmail.com** (edit this). We will remove or update it within 48 hours.
 
 ## Disclaimer
 
-This file is a good-faith notice and is not legal advice.
+*Whatever images are shown in our website are legal property of its real owner. We just use it for student gaming participation non profit purpose. downloaded from 4k walpaper . com*
